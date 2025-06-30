@@ -1,0 +1,33 @@
+import 'dart:ui';
+
+import 'package:evently_app/utils/app_colors.dart';
+import 'package:flutter/src/painting/text_style.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+class AppStyles {
+  static TextStyle semi20Black = GoogleFonts.inter(
+    fontSize: 20,
+    fontWeight: FontWeight.w700,
+    color: AppColors.blackColor,
+  );
+  static TextStyle semi20Primary = GoogleFonts.inter(
+    fontSize: 20,
+    fontWeight: FontWeight.w700,
+    color: AppColors.primaryLight,
+  );
+  static TextStyle bold12White = GoogleFonts.inter(
+    fontSize: 12,
+    fontWeight: FontWeight.bold,
+    color: AppColors.whiteColor,
+  );
+  static TextStyle bold14White = GoogleFonts.inter(
+    fontSize: 14,
+    fontWeight: FontWeight.bold,
+    color: AppColors.whiteColor,
+  );
+  static TextStyle bold14Primary = GoogleFonts.inter(
+    fontSize: 14,
+    fontWeight: FontWeight.bold,
+    color: AppColors.primaryLight,
+  );
+}
