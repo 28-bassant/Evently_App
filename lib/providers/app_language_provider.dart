@@ -10,4 +10,7 @@ class AppLanguageProvider extends ChangeNotifier{
     notifyListeners();
   }
 
+  bool isArabic() {
+    return appLanguage == 'ar';
+  }
 }
