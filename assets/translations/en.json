@@ -1,0 +1,9 @@
+{
+"language" : "Language",
+"arabic" : "Arabic",
+"english" : "English",
+"theme" : "Theme",
+"light" : "Light",
+"dark" : "Dark"
+"logout" : "Logout"
+}
