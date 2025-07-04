@@ -1,6 +1,4 @@
 import 'package:evently_app/on_boarding/on_boarding_screen1.dart';
-import 'package:evently_app/on_boarding/on_boarding_screen3.dart';
-import 'package:evently_app/on_boarding/on_boarding_screen4.dart';
 import 'package:evently_app/utils/app_assets.dart';
 import 'package:evently_app/utils/app_colors.dart';
 import 'package:evently_app/utils/app_styles.dart';
@@ -16,6 +14,8 @@ import '../ui/home_screen.dart';
 import 'on_boarding_screen2.dart';
 
 class OnboardingScreen extends StatefulWidget {
+  const OnboardingScreen({super.key});
+
   @override
   State<OnboardingScreen> createState() => _OnboardingScreenState();
 }
@@ -30,11 +30,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
-  final List<Widget> onboardingPages = [
-    OnBoardingScreen1(),
-    OnBoardingScreen2(),
-    // create as many as you want
-  ];
   @override
   Widget build(BuildContext context) {
     var langageProvider = Provider.of<AppLanguageProvider>(context);
@@ -58,15 +53,21 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
         PageViewModel(
           titleWidget: Image(image: AssetImage(AppAssets.onBoardingTopTitile)),
-          bodyWidget: OnBoardingScreen2(),
+          bodyWidget: OnBoardingScreen2(ImagePath: AppAssets.onBoardingScreen2,
+            textTitle: AppLocalizations.of(context)!.onboarding2title,
+            textContent: AppLocalizations.of(context)!.onboarding2content,),
         ),
         PageViewModel(
           titleWidget: Image(image: AssetImage(AppAssets.onBoardingTopTitile)),
-          bodyWidget: OnBoardingScreen3(),
+          bodyWidget: OnBoardingScreen2(ImagePath: AppAssets.onBoardingScreen3,
+            textTitle: AppLocalizations.of(context)!.onboarding3title,
+            textContent: AppLocalizations.of(context)!.onboarding3content,),
         ),
         PageViewModel(
           titleWidget: Image(image: AssetImage(AppAssets.onBoardingTopTitile)),
-          bodyWidget: OnBoardingScreen4(),
+          bodyWidget: OnBoardingScreen2(ImagePath: AppAssets.onBoardingScreen4,
+            textTitle: AppLocalizations.of(context)!.onboarding4title,
+            textContent: AppLocalizations.of(context)!.onboarding4content,),
         ),
       ],
       onDone: () => _onDone(context),

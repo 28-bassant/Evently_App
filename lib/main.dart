@@ -33,12 +33,13 @@ class MyApp extends StatelessWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       debugShowCheckedModeBanner: false,
       locale: Locale(langageProvider.appLanguage),
-      initialRoute: AppRoutes.onBoardingRouteName,
+      initialRoute: AppRoutes.homeRouteName,
       routes: {
         AppRoutes.homeRouteName : (context)=>HomeScreen(),
         AppRoutes.onBoardingRouteName: (context) => OnboardingScreen(),
         AppRoutes.onBoardingScreen1RouteName: (context) => OnBoardingScreen1(),
-        AppRoutes.onBoardingScreen2RouteName: (context) => OnBoardingScreen2(),
+        AppRoutes.onBoardingScreen2RouteName: (context) =>
+            OnBoardingScreen2(textContent: '', ImagePath: '', textTitle: '',),
       },
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 
-import '../l10n/app_localizations.dart';
-import '../utils/app_assets.dart';
 import '../utils/app_styles.dart';
 
 class OnBoardingScreen2 extends StatelessWidget {
-  const OnBoardingScreen2({super.key});
+  String ImagePath;
+  String textContent;
+  String textTitle;
+
+  OnBoardingScreen2(
+      {required this.ImagePath, required this.textTitle, required this.textContent});
 
   @override
   Widget build(BuildContext context) {
@@ -15,18 +18,18 @@ class OnBoardingScreen2 extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Image(
-          image: AssetImage(AppAssets.onBoardingScreen2),
+          image: AssetImage(ImagePath),
           fit: BoxFit.fill,
           width: double.infinity,
         ),
         SizedBox(height: height * .02),
         Text(
-          AppLocalizations.of(context)!.onboarding2title,
+          textTitle,
           style: AppStyles.bold20Primary,
         ),
         SizedBox(height: height * .02),
         Text(
-          AppLocalizations.of(context)!.onboarding2content,
+          textContent,
           style: Theme.of(context).textTheme.headlineMedium,
         ),
         SizedBox(height: height * 0.02),
