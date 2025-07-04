@@ -13,4 +13,15 @@ class AppAssets {
       'assets/images/on_boarding_screen3.png';
   static const String onBoardingScreen4 =
       'assets/images/on_boarding_screen4.png';
+  static const String HomeIcon = 'assets/images/IconHome.png';
+  static const String MapIcon = 'assets/images/MapIcon.png';
+  static const String FavouriteIcon = 'assets/images/FavouriteIcon.png';
+  static const String ProfileIcon = 'assets/images/profileIcon.png';
+  static const String unSelectedHomeIcon =
+      'assets/images/unSelectedHomeIcon.png';
+  static const String unSelectedMapIcon = 'assets/images/unSelectedMapIcon.png';
+  static const String unSelectedFavouriteIcon =
+      'assets/images/unSelectedFavouriteIcon.png';
+  static const String unSelectedProfileIcon =
+      'assets/images/unSelectedProfileIcon.png';
 }
