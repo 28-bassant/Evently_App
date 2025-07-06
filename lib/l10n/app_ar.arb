@@ -19,7 +19,40 @@
 "home" : "الرئيسية",
 "map" : "الخريطة",
 "favourite" : "المفضلة",
-"profile" : "الملف الشخصي"
+"profile" : "الملف الشخصي",
+"welcome_back" : "مرحبا بعودتك ✨ ",
+"all": "الكل",
+"sport": "رياضة",
+"birthday": "عيد ميلاد",
+"meeting": "اجتماع",
+"gaming": "ألعاب",
+"workshop": "ورشة عمل",
+"book_club": "نادي الكتاب",
+"exhibition": "معرض",
+"holiday": "عطلة",
+"eating": "تناول الطعام",
+"email" : "البريد الإلكتروني",
+"password" : "كلمة المرور",
+"name" : "الاسم",
+"re_password" : "تأكيد كلمة المرور",
+"forget_password" : "هل نسيت كلمة المرور؟",
+"do_not_have_account" : "ليس لديك حساب؟",
+"create_account" : "إنشاء حساب",
+"login_with_google" : "تسجيل الدخول باستخدام جوجل",
+"login" : "تسجيل الدخول",
+"register" : "تسجيل",
+"search" : "ابحث عن فعالية",
+"please_enter_email" : "يرجى إدخال البريد الإلكتروني",
+"please_enter_name" : "يرجى إدخال الاسم",
+"please_enter_valid_email" : "يرجى إدخال بريد إلكتروني صالح",
+"please_enter_password" : "يرجى إدخال كلمة المرور",
+"password_must_be_at_least_6" : "يجب أن تكون كلمة المرور 6 أحرف على الأقل",
+"re_password_does_not_match_password" : "تأكيد كلمة المرور لا يطابق كلمة المرور",
+"or" : "أو",
+"already_have_account": "هل لديك حساب بالفعل؟"
+
+
+
 
 
 }

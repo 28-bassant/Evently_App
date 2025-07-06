@@ -24,4 +24,17 @@ class AppAssets {
       'assets/images/unSelectedFavouriteIcon.png';
   static const String unSelectedProfileIcon =
       'assets/images/unSelectedProfileIcon.png';
+  static const String themeIcon = 'assets/images/themeIcon.png';
+  static const String birthdayImage = 'assets/images/birthday.png';
+  static const String iconSearch = 'assets/images/iconSearch.png';
+  static const String iconEmail = 'assets/images/icon_email.png';
+  static const String iconUser = 'assets/images/icon_user.png';
+  static const String iconPassword = 'assets/images/icon_password.png';
+  static const String iconGoogle = 'assets/images/icon_google.png';
+  static const String logoImage = 'assets/images/Logo.png';
+  static const String showIcon = 'assets/images/show_icon.png';
+  static const String darkShowIcon = 'assets/images/dark_show_icon.png';
+  static const String darkEmailIcon = 'assets/images/dark_email_icon.png';
+  static const String darkPasswordIcon = 'assets/images/dark_password_icon.png';
+  static const String darkUserIcon = 'assets/images/dark_user_icon.png';
 }

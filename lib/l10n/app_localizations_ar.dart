@@ -74,4 +74,96 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get profile => 'الملف الشخصي';
+
+  @override
+  String get welcome_back => 'مرحبا بعودتك ✨ ';
+
+  @override
+  String get all => 'الكل';
+
+  @override
+  String get sport => 'رياضة';
+
+  @override
+  String get birthday => 'عيد ميلاد';
+
+  @override
+  String get meeting => 'اجتماع';
+
+  @override
+  String get gaming => 'ألعاب';
+
+  @override
+  String get workshop => 'ورشة عمل';
+
+  @override
+  String get book_club => 'نادي الكتاب';
+
+  @override
+  String get exhibition => 'معرض';
+
+  @override
+  String get holiday => 'عطلة';
+
+  @override
+  String get eating => 'تناول الطعام';
+
+  @override
+  String get email => 'البريد الإلكتروني';
+
+  @override
+  String get password => 'كلمة المرور';
+
+  @override
+  String get name => 'الاسم';
+
+  @override
+  String get re_password => 'تأكيد كلمة المرور';
+
+  @override
+  String get forget_password => 'هل نسيت كلمة المرور؟';
+
+  @override
+  String get do_not_have_account => 'ليس لديك حساب؟';
+
+  @override
+  String get create_account => 'إنشاء حساب';
+
+  @override
+  String get login_with_google => 'تسجيل الدخول باستخدام جوجل';
+
+  @override
+  String get login => 'تسجيل الدخول';
+
+  @override
+  String get register => 'تسجيل';
+
+  @override
+  String get search => 'ابحث عن فعالية';
+
+  @override
+  String get please_enter_email => 'يرجى إدخال البريد الإلكتروني';
+
+  @override
+  String get please_enter_name => 'يرجى إدخال الاسم';
+
+  @override
+  String get please_enter_valid_email => 'يرجى إدخال بريد إلكتروني صالح';
+
+  @override
+  String get please_enter_password => 'يرجى إدخال كلمة المرور';
+
+  @override
+  String get password_must_be_at_least_6 =>
+      'يجب أن تكون كلمة المرور 6 أحرف على الأقل';
+
+  @override
+  String get re_password_does_not_match_password =>
+      'تأكيد كلمة المرور لا يطابق كلمة المرور';
+
+  @override
+  String get or => 'أو';
+
+  @override
+  String get already_have_account => 'هل لديك حساب بالفعل؟';
 }

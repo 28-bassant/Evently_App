@@ -74,4 +74,95 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get profile => 'Profile';
+
+  @override
+  String get welcome_back => 'Welcome Back ✨';
+
+  @override
+  String get all => 'All';
+
+  @override
+  String get sport => 'Sport';
+
+  @override
+  String get birthday => 'Birthday';
+
+  @override
+  String get meeting => 'Meeting';
+
+  @override
+  String get gaming => 'Gaming';
+
+  @override
+  String get workshop => 'Workshop';
+
+  @override
+  String get book_club => 'Book Club';
+
+  @override
+  String get exhibition => 'Exhibition';
+
+  @override
+  String get holiday => 'Holiday';
+
+  @override
+  String get eating => 'Eating';
+
+  @override
+  String get email => 'Email';
+
+  @override
+  String get password => 'Password';
+
+  @override
+  String get name => 'Name';
+
+  @override
+  String get re_password => 'Re-Password';
+
+  @override
+  String get forget_password => 'Forget Password?';
+
+  @override
+  String get do_not_have_account => 'Don’t Have Account ?';
+
+  @override
+  String get create_account => 'Create Account';
+
+  @override
+  String get login_with_google => 'Login With Google';
+
+  @override
+  String get login => 'Login';
+
+  @override
+  String get register => 'Register';
+
+  @override
+  String get search => 'Search for Event';
+
+  @override
+  String get please_enter_email => 'Please Enter Email';
+
+  @override
+  String get please_enter_name => 'Please Enter Name';
+
+  @override
+  String get please_enter_valid_email => 'Please Enter Valid Email';
+
+  @override
+  String get please_enter_password => 'Please Enter Password';
+
+  @override
+  String get password_must_be_at_least_6 => 'Password must be at least 6';
+
+  @override
+  String get re_password_does_not_match_password =>
+      'Re-Password doesn\'t match password';
+
+  @override
+  String get or => 'Or';
+
+  @override
+  String get already_have_account => 'Already Have Account ?';
 }

@@ -1,8 +1,9 @@
 import 'package:evently_app/on_boarding/on_boarding_screen.dart';
 import 'package:evently_app/on_boarding/on_boarding_screen1.dart';
-import 'package:evently_app/on_boarding/on_boarding_screen2.dart';
 import 'package:evently_app/providers/app_language_provider.dart';
 import 'package:evently_app/providers/app_theme_provider.dart';
+import 'package:evently_app/ui/auth/Login/login_screen.dart';
+import 'package:evently_app/ui/auth/Register/register_screen.dart';
 import 'package:evently_app/ui/home_screen.dart';
 import 'package:evently_app/utils/app_routes.dart';
 import 'package:evently_app/utils/app_theme.dart';
@@ -33,13 +34,13 @@ class MyApp extends StatelessWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       debugShowCheckedModeBanner: false,
       locale: Locale(langageProvider.appLanguage),
-      initialRoute: AppRoutes.homeRouteName,
+      initialRoute: AppRoutes.onBoardingRouteName,
       routes: {
         AppRoutes.homeRouteName : (context)=>HomeScreen(),
         AppRoutes.onBoardingRouteName: (context) => OnboardingScreen(),
         AppRoutes.onBoardingScreen1RouteName: (context) => OnBoardingScreen1(),
-        AppRoutes.onBoardingScreen2RouteName: (context) =>
-            OnBoardingScreen2(textContent: '', ImagePath: '', textTitle: '',),
+        AppRoutes.loginRouteName: (context) => LoginScreen(),
+        AppRoutes.registerRouteName: (context) => RegisterScreen(),
       },
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
