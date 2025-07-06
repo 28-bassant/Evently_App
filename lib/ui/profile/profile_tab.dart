@@ -1,6 +1,7 @@
 import 'package:evently_app/l10n/app_localizations.dart';
 import 'package:evently_app/ui/profile/language/language_bootom_sheet.dart';
 import 'package:evently_app/ui/profile/theme/theme_bottom_sheet.dart';
+import 'package:evently_app/ui/widgets/custom_elevated_button.dart';
 import 'package:evently_app/utils/app_assets.dart';
 import 'package:evently_app/utils/app_colors.dart';
 import 'package:evently_app/utils/app_styles.dart';
@@ -56,7 +57,7 @@ class _ProfileTabState extends State<ProfileTab> {
           horizontal: width * .04
         ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(AppLocalizations.of(context)!.language,
             style: Theme.of(context).textTheme.headlineLarge,),
@@ -133,7 +134,44 @@ class _ProfileTabState extends State<ProfileTab> {
 
             ),
             Spacer(),
-            ElevatedButton(
+            CustomElevatedButton(
+              text: AppLocalizations.of(context)!.logout,
+              backgroundColor: AppColors.redColor,
+              borderColor: AppColors.redColor,
+              isIcon: true,
+              iconWidget: Padding(
+                padding: EdgeInsets.symmetric(horizontal: width * .02),
+                child: Icon(Icons.logout,
+                  color: AppColors.whiteBgColor,
+                  size: 35,),
+              ),
+              onPressed: () {
+                /// to do : log out
+              },
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  void ShowLanguageBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => LanguageBootomSheet(),
+    );
+  }
+
+  void ShowThemeBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => ThemeBottomSheet(),
+    );
+  }
+}
+
+/*
+* ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.redColor,
                 shape: RoundedRectangleBorder(
@@ -155,22 +193,4 @@ class _ProfileTabState extends State<ProfileTab> {
                     style: AppStyles.regular20White,)
                   ],
                 ))
-          ],
-        ),
-      ),
-    );
-  }
-
-  void ShowLanguageBottomSheet(){
-    showModalBottomSheet(
-        context: context,
-        builder:(context) => LanguageBootomSheet(),
-    );
-  }
-  void ShowThemeBottomSheet(){
-    showModalBottomSheet(
-        context: context,
-        builder:(context) => ThemeBottomSheet(),
-    );
-  }
-}
+* */

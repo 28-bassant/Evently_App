@@ -1,4 +1,5 @@
 import 'package:evently_app/on_boarding/on_boarding_screen1.dart';
+import 'package:evently_app/ui/auth/Login/login_screen.dart';
 import 'package:evently_app/utils/app_assets.dart';
 import 'package:evently_app/utils/app_colors.dart';
 import 'package:evently_app/utils/app_styles.dart';
@@ -10,7 +11,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../l10n/app_localizations.dart';
 import '../providers/app_language_provider.dart';
 import '../providers/app_theme_provider.dart';
-import '../ui/home_screen.dart';
 import 'on_boarding_screen2.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -26,7 +26,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     await prefs.setBool('seenOnboarding', true);
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (_) => HomeScreen()),
+      MaterialPageRoute(builder: (_) => LoginScreen()),
     );
   }
 
