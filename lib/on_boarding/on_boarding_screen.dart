@@ -30,6 +30,27 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
+
+  Future<void> readLanguage() async {
+    final languageProvider = Provider.of<AppLanguageProvider>(
+        context, listen: false);
+    await languageProvider.getLanguage();
+  }
+
+  Future<void> readTheme() async {
+    final themeProvider = Provider.of<AppThemeProvider>(context, listen: false);
+    await themeProvider.getTheme();
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    readLanguage();
+    readTheme();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     var langageProvider = Provider.of<AppLanguageProvider>(context);
