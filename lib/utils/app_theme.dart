@@ -8,11 +8,14 @@ class AppTheme {
 
     ),
     primaryColor: AppColors.primaryLight,
+    dividerColor: AppColors.whiteColor,
     textTheme: TextTheme(
       headlineLarge: AppStyles.bold20Black,
       headlineMedium: AppStyles.medium16Black,
         headlineSmall: AppStyles.medium16Primary,
-        labelLarge: AppStyles.bold14Black
+        labelMedium: AppStyles.bold16White,
+        labelLarge: AppStyles.bold14Black,
+        titleMedium: AppStyles.medium16Black
     ),
 
     focusColor: AppColors.whiteColor,
@@ -29,11 +32,15 @@ class AppTheme {
 
     ),
     primaryColor: AppColors.primaryDark,
+    dividerColor: AppColors.primaryLight,
     textTheme: TextTheme(
       headlineLarge: AppStyles.bold20White,
       headlineMedium: AppStyles.medium16White,
         headlineSmall: AppStyles.medium16White,
-        labelLarge: AppStyles.bold14Primary
+        labelLarge: AppStyles.bold14Primary,
+        labelMedium: AppStyles.bold16Black,
+        titleMedium: AppStyles.medium16White
+
     ),
     focusColor: AppColors.primaryLight,
 

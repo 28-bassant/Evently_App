@@ -37,4 +37,37 @@ class AppAssets {
   static const String darkEmailIcon = 'assets/images/dark_email_icon.png';
   static const String darkPasswordIcon = 'assets/images/dark_password_icon.png';
   static const String darkUserIcon = 'assets/images/dark_user_icon.png';
+  static const String editIcon = 'assets/images/icon_edit.png';
+  static const String eventDateIcon = 'assets/images/event_date_icon.png';
+  static const String eventTimeIcon = 'assets/images/event_time_icon.png';
+  static const String locationIcon = 'assets/images/location_icon.png';
+  static const String sportImageLight = 'assets/images/sport_image_light.png';
+  static const String birthdayImageLight =
+      'assets/images/birthday_image_light.png';
+  static const String meetingImageLight =
+      'assets/images/meeting_image_light.png';
+  static const String eatingImageLight = 'assets/images/eating_image_light.png';
+  static const String bookClubImageLight =
+      'assets/images/bookclub_image_light.png';
+  static const String exhibitionImageLight =
+      'assets/images/exhibition_image_light.png';
+  static const String workShopImageLight =
+      'assets/images/workshop_image_light.png';
+  static const String holidayImageLight =
+      'assets/images/holiday_image_light.png';
+  static const String gammingImageLight =
+      'assets/images/gaming_image_light.png';
+  static const String sportImageDark = 'assets/images/sport_image_dark.png';
+  static const String birthdayImageDark =
+      'assets/images/birthday_image_dark.png';
+  static const String meetingImageDark = 'assets/images/meeting_image_dark.png';
+  static const String eatingImageDark = 'assets/images/eating_image_dark.png';
+  static const String bookClubImageDark =
+      'assets/images/bookclub_image_dark.png';
+  static const String exhibitionImageDark =
+      'assets/images/exhibition_image_dark.png';
+  static const String workShopImageDark =
+      'assets/images/workshop_image_dark.png';
+  static const String holidayImageDark = 'assets/images/holiday_image_dark.png';
+  static const String gammingImageDark = 'assets/images/gaming_image_dark.png';
 }

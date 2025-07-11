@@ -49,7 +49,19 @@
 "password_must_be_at_least_6" : "Password must be at least 6",
 "re_password_does_not_match_password" : "Re-Password doesn't match password",
 "or" : "Or",
-"already_have_account" : "Already Have Account ?"
+"already_have_account" : "Already Have Account ?",
+"create_event" : "Create Event",
+"title" : "Title",
+"event_title" : "Event Title",
+"description" : "Description",
+"event_description" : "Event Description",
+"event_date" : "Event Date",
+"event_time" : "Event Time",
+"choose_date" : "Choose Date",
+"choose_time" : "Choose Time",
+"location" : "Location",
+"choose_event_location" : "Choose Event Location",
+"add_event" : "Add Event"
 
 
 

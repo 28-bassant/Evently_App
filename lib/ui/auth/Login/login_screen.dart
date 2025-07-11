@@ -183,7 +183,22 @@ class _LoginScreenState extends State<LoginScreen> {
                         text: AppLocalizations.of(context)!.login_with_google,
                         textStyle: AppStyles.medium20Primary,
                         isIcon: true,
-                        iconWidget: Image.asset(AppAssets.iconGoogle),
+                        iconWidget: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(AppAssets.iconGoogle),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: width * .02),
+                              child: Text(
+                                AppLocalizations.of(context)!.login_with_google,
+                                style: AppStyles.medium20Primary,
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        //iconWidget: Image.asset(AppAssets.iconGoogle),
                         backgroundColor: AppColors.transparentColor,
                         mainAxisAlignment: MainAxisAlignment.center,
                       ),

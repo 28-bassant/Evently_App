@@ -43,19 +43,20 @@ class CustomElevatedButton extends StatelessWidget {
         ),
       ),
       child: isIcon
-          ? Row(
-              mainAxisAlignment: mainAxisAlignment,
-              children: [
-                iconWidget!,
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: width * .02),
-                  child: Text(
-                    text,
-                    style: textStyle ?? AppStyles.medium20White,
-                  ),
-                ),
-              ],
-            )
+          ? iconWidget
+          // ? Row(
+          //     mainAxisAlignment: mainAxisAlignment,
+          //     children: [
+          //       iconWidget!,
+          //       Padding(
+          //         padding: EdgeInsets.symmetric(horizontal: width * .02),
+          //         child: Text(
+          //           text,
+          //           style: textStyle ?? AppStyles.medium20White,
+          //         ),
+          //       ),
+          //     ],
+          //   )
           : Text(text, style: textStyle ?? AppStyles.medium20White),
     );
   }

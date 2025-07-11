@@ -49,7 +49,20 @@
 "password_must_be_at_least_6" : "يجب أن تكون كلمة المرور 6 أحرف على الأقل",
 "re_password_does_not_match_password" : "تأكيد كلمة المرور لا يطابق كلمة المرور",
 "or" : "أو",
-"already_have_account": "هل لديك حساب بالفعل؟"
+"already_have_account": "هل لديك حساب بالفعل؟",
+"create_event": "إنشاء فعالية",
+"title": "العنوان",
+"event_title": "عنوان الفعالية",
+"description": "الوصف",
+"event_description": "وصف الفعالية",
+"event_date": "تاريخ الفعالية",
+"event_time": "وقت الفعالية",
+"choose_date": "اختر التاريخ",
+"choose_time": "اختر الوقت",
+"location": "الموقع",
+"choose_event_location": "اختر موقع الفعالية",
+"add_event": "إضافة فعالية"
+
 
 
 
