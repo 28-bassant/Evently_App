@@ -2,6 +2,7 @@ import 'package:evently_app/on_boarding/on_boarding_screen.dart';
 import 'package:evently_app/on_boarding/on_boarding_screen1.dart';
 import 'package:evently_app/providers/app_language_provider.dart';
 import 'package:evently_app/providers/app_theme_provider.dart';
+import 'package:evently_app/ui/add_event/add_event.dart';
 import 'package:evently_app/ui/auth/Login/login_screen.dart';
 import 'package:evently_app/ui/auth/Register/register_screen.dart';
 import 'package:evently_app/ui/home_screen.dart';
@@ -34,13 +35,14 @@ class MyApp extends StatelessWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       debugShowCheckedModeBanner: false,
       locale: Locale(langageProvider.appLanguage),
-      initialRoute: AppRoutes.onBoardingRouteName,
+      initialRoute: AppRoutes.homeRouteName,
       routes: {
         AppRoutes.homeRouteName : (context)=>HomeScreen(),
         AppRoutes.onBoardingRouteName: (context) => OnboardingScreen(),
         AppRoutes.onBoardingScreen1RouteName: (context) => OnBoardingScreen1(),
         AppRoutes.loginRouteName: (context) => LoginScreen(),
         AppRoutes.registerRouteName: (context) => RegisterScreen(),
+        AppRoutes.addEventRouteName: (context) => AddEvent(),
       },
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,

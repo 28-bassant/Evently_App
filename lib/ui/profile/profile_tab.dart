@@ -140,10 +140,22 @@ class _ProfileTabState extends State<ProfileTab> {
               borderColor: AppColors.redColor,
               isIcon: true,
               iconWidget: Padding(
-                padding: EdgeInsets.symmetric(horizontal: width * .02),
-                child: Icon(Icons.logout,
-                  color: AppColors.whiteBgColor,
-                  size: 35,),
+                padding: EdgeInsets.symmetric(horizontal: width * .04),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Icon(Icons.logout,
+                      color: AppColors.whiteColor,
+                      size: 35,),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: width * .02),
+                      child: Text(
+                        AppLocalizations.of(context)!.logout,
+                        style: AppStyles.medium20White,
+                      ),
+                    ),
+                  ],
+                ),
               ),
               onPressed: () {
                 /// to do : log out

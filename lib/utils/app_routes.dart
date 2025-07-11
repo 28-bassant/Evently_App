@@ -5,4 +5,5 @@ class AppRoutes {
   static const String onBoardingScreen2RouteName = 'on_boarding_screen2';
   static const String loginRouteName = 'login_screen';
   static const String registerRouteName = 'register_screen';
+  static const String addEventRouteName = 'add_event_screen';
 }

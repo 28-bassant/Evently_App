@@ -18,6 +18,7 @@ class _HomeTabState extends State<HomeTab> {
 
   @override
   Widget build(BuildContext context) {
+
     List<String> eventNameList = [
       AppLocalizations.of(context)!.all,
       AppLocalizations.of(context)!.sport,
@@ -117,14 +118,25 @@ class _HomeTabState extends State<HomeTab> {
                         });
                       },
                       isScrollable: true,
+
                       dividerColor: AppColors.transparentColor,
                       tabAlignment: TabAlignment.start,
                       labelPadding: EdgeInsets.zero,
                       indicatorColor: AppColors.transparentColor,
                       tabs: eventNameList.map((eventName) {
-                        return EventTabItem(eventName: eventName,
+                        return EventTabItem(
+                            eventName: eventName,
                             isSelected: selectedIndex == eventNameList.indexOf(
-                                eventName));
+                              eventName,
+                            ),
+                            isSelectedBgColor: Theme
+                                .of(context)
+                                .dividerColor,
+                            selecetdEventTextStyle: Theme
+                                .of(context)
+                                .textTheme
+                                .headlineSmall
+                        );
                       },).toList())
               )
             ],

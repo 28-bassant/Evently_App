@@ -17,9 +17,11 @@ class CustomTextFormField extends StatelessWidget {
   TextInputType? keyboardType;
   TextEditingController? controller;
   bool obscureText;
+  int? maxLines;
 
   CustomTextFormField({
     super.key,
+    this.maxLines,
     this.borderColor,
     required this.hintText,
     this.hintStyle,
@@ -57,6 +59,7 @@ class CustomTextFormField extends StatelessWidget {
         suffixIcon: suffixIcon,
       ),
       controller: controller,
+      maxLines: maxLines ?? 1,
       style: themeProvider.appTheme == ThemeMode.light
           ? AppStyles.medium16Black
           : AppStyles.medium16White,

@@ -1,5 +1,6 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
+
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -166,4 +167,40 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get already_have_account => 'هل لديك حساب بالفعل؟';
+
+  @override
+  String get create_event => 'إنشاء فعالية';
+
+  @override
+  String get title => 'العنوان';
+
+  @override
+  String get event_title => 'عنوان الفعالية';
+
+  @override
+  String get description => 'الوصف';
+
+  @override
+  String get event_description => 'وصف الفعالية';
+
+  @override
+  String get event_date => 'تاريخ الفعالية';
+
+  @override
+  String get event_time => 'وقت الفعالية';
+
+  @override
+  String get choose_date => 'اختر التاريخ';
+
+  @override
+  String get choose_time => 'اختر الوقت';
+
+  @override
+  String get location => 'الموقع';
+
+  @override
+  String get choose_event_location => 'اختر موقع الفعالية';
+
+  @override
+  String get add_event => 'إضافة فعالية';
 }

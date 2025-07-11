@@ -17,29 +17,32 @@ class FavouriteTab extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: width * .02),
-              child: CustomTextFormField(
-                hintText: AppLocalizations.of(context)!.search,
-                hintStyle: AppStyles.bold14Primary,
-                borderColor: AppColors.primaryLight,
-                prefixIcon: Image.asset(AppAssets.iconSearch),
-                controller: searchController,
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: width * .02),
+          child: Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: width * .02),
+                child: CustomTextFormField(
+                  hintText: AppLocalizations.of(context)!.search,
+                  hintStyle: AppStyles.bold14Primary,
+                  borderColor: AppColors.primaryLight,
+                  prefixIcon: Image.asset(AppAssets.iconSearch),
+                  controller: searchController,
+                ),
               ),
-            ),
-            SizedBox(height: height * .01),
-            Expanded(
-              child: ListView.separated(
-                itemBuilder: (context, index) => EventItem(),
-                separatorBuilder: (context, index) {
-                  return SizedBox(height: height * .01);
-                },
-                itemCount: 20,
+              SizedBox(height: height * .01),
+              Expanded(
+                child: ListView.separated(
+                  itemBuilder: (context, index) => EventItem(),
+                  separatorBuilder: (context, index) {
+                    return SizedBox(height: height * .01);
+                  },
+                  itemCount: 20,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
