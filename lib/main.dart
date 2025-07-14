@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:evently_app/on_boarding/on_boarding_screen.dart';
 import 'package:evently_app/on_boarding/on_boarding_screen1.dart';
 import 'package:evently_app/providers/app_language_provider.dart';
@@ -8,12 +9,19 @@ import 'package:evently_app/ui/auth/Register/register_screen.dart';
 import 'package:evently_app/ui/home_screen.dart';
 import 'package:evently_app/utils/app_routes.dart';
 import 'package:evently_app/utils/app_theme.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'firebase_options.dart';
 import 'l10n/app_localizations.dart';
 
-void main(){
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  await FirebaseFirestore.instance.disableNetwork();
   runApp( MultiProvider(
     providers: [
        ChangeNotifierProvider(create: (context) => AppLanguageProvider(),),
