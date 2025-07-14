@@ -1,4 +1,6 @@
+import 'package:evently_app/firebase_utils.dart';
 import 'package:evently_app/l10n/app_localizations.dart';
+import 'package:evently_app/models/event.dart';
 import 'package:evently_app/ui/add_event/widgets/event_date_or_time.dart';
 import 'package:evently_app/ui/home_tab/widget/event_tab_item.dart';
 import 'package:evently_app/ui/widgets/custom_elevated_button.dart';
@@ -7,6 +9,7 @@ import 'package:evently_app/utils/app_assets.dart';
 import 'package:evently_app/utils/app_colors.dart';
 import 'package:evently_app/utils/app_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -27,6 +30,10 @@ class _AddEventState extends State<AddEvent> {
   String? formatTime;
   TextEditingController eventTitleController = TextEditingController();
   TextEditingController eventDescriptionController = TextEditingController();
+  String SelectedLightImage = '';
+  String SelectedDarkImage = '';
+  String SelectedEventName = '';
+
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +73,9 @@ class _AddEventState extends State<AddEvent> {
       AppAssets.holidayImageDark,
       AppAssets.eatingImageDark,
     ];
+    SelectedLightImage = eventImageLightList[selectedIndex];
+    SelectedDarkImage = eventImageDarkList[selectedIndex];
+    SelectedEventName = eventNameList[selectedIndex];
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -153,6 +163,7 @@ class _AddEventState extends State<AddEvent> {
               SizedBox(height: height * .02),
               CustomTextFormField(
                 controller: eventDescriptionController,
+
                 hintText: AppLocalizations.of(context)!.event_description,
                 maxLines: 4,
               ),
@@ -246,5 +257,27 @@ class _AddEventState extends State<AddEvent> {
     setState(() {});
   }
 
-  void AddEvent() {}
+  void AddEvent() {
+    Event event = Event(
+        title: eventTitleController.text,
+        description: eventDescriptionController.text,
+        image: SelectedLightImage,
+        dateTime: selectedDate!,
+        eventName: SelectedEventName,
+        time: formatTime!);
+    FirebaseUtils.addEventToFireStore(event).timeout(
+      Duration(milliseconds: 500),
+      onTimeout: () {
+        Fluttertoast.showToast(
+            msg: "Event Added Successfully",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.green,
+            textColor: Colors.white,
+            fontSize: 16.0
+        );
+        Navigator.pop(context);
+      },);
+  }
 }
