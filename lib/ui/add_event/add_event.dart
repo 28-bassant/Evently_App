@@ -14,6 +14,8 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/app_theme_provider.dart';
+import '../../providers/event_list_provider.dart';
+import '../toast_utils.dart';
 
 class AddEvent extends StatefulWidget {
   AddEvent({super.key});
@@ -33,11 +35,14 @@ class _AddEventState extends State<AddEvent> {
   String SelectedLightImage = '';
   String SelectedDarkImage = '';
   String SelectedEventName = '';
+  late AppThemeProvider themeProvider;
+  late EventListProvider eventListProvider;
 
 
   @override
   Widget build(BuildContext context) {
-    var themeProvider = Provider.of<AppThemeProvider>(context);
+    themeProvider = Provider.of<AppThemeProvider>(context);
+    eventListProvider = Provider.of<EventListProvider>(context);
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     List<String> eventNameList = [
@@ -261,22 +266,18 @@ class _AddEventState extends State<AddEvent> {
     Event event = Event(
         title: eventTitleController.text,
         description: eventDescriptionController.text,
-        image: SelectedLightImage,
+        image: themeProvider.iSDark() ? SelectedDarkImage : SelectedLightImage,
         dateTime: selectedDate!,
         eventName: SelectedEventName,
         time: formatTime!);
     FirebaseUtils.addEventToFireStore(event).timeout(
       Duration(milliseconds: 500),
       onTimeout: () {
-        Fluttertoast.showToast(
-            msg: "Event Added Successfully",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.green,
-            textColor: Colors.white,
-            fontSize: 16.0
-        );
+        ToastUtils.ShowToast(
+            msg: AppLocalizations.of(context)!.event_added_successfully,
+            bgColor: AppColors.primaryLight,
+            textColor: AppColors.whiteColor);
+        eventListProvider.getAllEvents();
         Navigator.pop(context);
       },);
   }

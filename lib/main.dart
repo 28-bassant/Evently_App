@@ -3,6 +3,7 @@ import 'package:evently_app/on_boarding/on_boarding_screen.dart';
 import 'package:evently_app/on_boarding/on_boarding_screen1.dart';
 import 'package:evently_app/providers/app_language_provider.dart';
 import 'package:evently_app/providers/app_theme_provider.dart';
+import 'package:evently_app/providers/event_list_provider.dart';
 import 'package:evently_app/ui/add_event/add_event.dart';
 import 'package:evently_app/ui/auth/Login/login_screen.dart';
 import 'package:evently_app/ui/auth/Register/register_screen.dart';
@@ -26,6 +27,7 @@ void main() async {
     providers: [
        ChangeNotifierProvider(create: (context) => AppLanguageProvider(),),
        ChangeNotifierProvider(create: (context) => AppThemeProvider(),),
+      ChangeNotifierProvider(create: (context) => EventListProvider(),),
     ],
 
       child: MyApp()));

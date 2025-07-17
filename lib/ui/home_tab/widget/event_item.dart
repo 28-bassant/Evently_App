@@ -1,28 +1,39 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:evently_app/utils/app_assets.dart';
 import 'package:evently_app/utils/app_colors.dart';
 import 'package:evently_app/utils/app_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../../models/event.dart';
+import '../../../providers/event_list_provider.dart';
 
 class EventItem extends StatelessWidget {
-  const EventItem({super.key});
+  Event event;
+
+  EventItem({super.key,
+    required this.event});
 
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
-    return Container(
+    var eventListProvider = Provider.of<EventListProvider>(context);
+    return
+      Container(
       margin: EdgeInsets.symmetric(
         horizontal: width * .02,
         vertical: height * .01,
       ),
       height: height * .31,
       decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16),
         image: DecorationImage(
           fit: BoxFit.fill,
-          image: AssetImage(AppAssets.birthdayImage),
+          image: AssetImage(event.image),
         ),
       ),
-      child: Column(
+        child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -41,8 +52,12 @@ class EventItem extends StatelessWidget {
             ),
             child: Column(
               children: [
-                Text('21', style: AppStyles.bold20Primary),
-                Text('Nov', style: AppStyles.bold14Primary),
+                Text(
+                    event.dateTime.day.toString()
+                    , style: AppStyles.bold20Primary),
+                Text(
+                    DateFormat('MMM').format(event.dateTime)
+                    , style: AppStyles.bold14Primary),
               ],
             ),
           ),
@@ -63,7 +78,7 @@ class EventItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'This is a Birthday Party ',
+                  event.title,
                   style: Theme.of(context).textTheme.labelLarge,
                 ),
                 ImageIcon(
