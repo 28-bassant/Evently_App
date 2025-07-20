@@ -81,11 +81,24 @@ class EventItem extends StatelessWidget {
                   event.title,
                   style: Theme.of(context).textTheme.labelLarge,
                 ),
-                ImageIcon(
-                  AssetImage(AppAssets.unSelectedFavouriteIcon),
-                  color: AppColors.primaryLight,
-                  size: 25,
-                ),
+                InkWell(
+                  onTap: () {
+                    eventListProvider.UpdateEvents(event);
+                  },
+                  child: event.isFavourite == true ?
+                  ImageIcon(
+                    AssetImage(AppAssets.favouiteFilledIcon),
+                    color: AppColors.primaryLight,
+                    size: 25,
+                  )
+                      :
+                  ImageIcon(
+                    AssetImage(AppAssets.unSelectedFavouriteIcon),
+                    color: AppColors.primaryLight,
+                    size: 25,
+                  ),
+                )
+
               ],
             ),
           ),

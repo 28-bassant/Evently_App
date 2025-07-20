@@ -41,6 +41,8 @@ class AppAssets {
   static const String eventDateIcon = 'assets/images/event_date_icon.png';
   static const String eventTimeIcon = 'assets/images/event_time_icon.png';
   static const String locationIcon = 'assets/images/location_icon.png';
+  static const String favouiteFilledIcon =
+      'assets/images/favouirite_filled_icon.png';
   static const String sportImageLight = 'assets/images/sport_image_light.png';
   static const String birthdayImageLight =
       'assets/images/birthday_image_light.png';
