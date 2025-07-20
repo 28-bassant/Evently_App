@@ -63,6 +63,7 @@
 "choose_event_location": "اختر موقع الفعالية",
 "add_event": "إضافة فعالية",
 "no_events_found" : "لم يتم العثور على فعاليات",
+"no_favourite_events_found" : "لم يتم العثور على فعاليات مفضلة",
 "event_added_successfully" : "تمت إضافة الفعالية بنجاح"
 
 

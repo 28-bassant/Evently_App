@@ -1,4 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:evently_app/ui/toast_utils.dart';
+import 'package:evently_app/utils/app_colors.dart';
+import 'package:evently_app/utils/app_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:evently_app/l10n/app_localizations.dart';
 
@@ -8,8 +11,10 @@ import '../models/event.dart';
 class EventListProvider extends ChangeNotifier {
   List<Event> eventsList = [];
   List<Event> filterEventsList = [];
+  List<Event> favouriteEventsList = [];
   List<String> eventNameList = [];
   int selectedIndex = 0;
+
 
   List<String> getEventNameList(BuildContext context) {
     return eventNameList = [
@@ -62,6 +67,49 @@ class EventListProvider extends ChangeNotifier {
     filterEventsList = querySnapShot.docs.map((doc) {
       return doc.data();
     }).toList();
+    notifyListeners();
+  }
+
+  void UpdateEvents(Event event) {
+    FirebaseUtils.getEventCollection().doc(event.id).
+    update({'isFavourite': !event.isFavourite}).timeout(Duration(
+      milliseconds: 500,
+
+    ),
+      onTimeout: () {
+        ToastUtils.ShowToast(
+            msg: 'Event Updated Successfully',
+            bgColor: AppColors.greenColor,
+            textColor: AppColors.whiteColor);
+      },);
+    selectedIndex == 0 ? getAllEvents() : getFilterEventsFromFireStore();
+    //getAllFavouriteEvents();
+    getAllFavouriteEventsFromFireStore();
+    notifyListeners();
+  }
+
+  void getAllFavouriteEvents() async {
+    QuerySnapshot<Event> querySnapshot = await FirebaseUtils
+        .getEventCollection().get();
+    eventsList = querySnapshot.docs.map((doc) {
+      return doc.data();
+    }).toList();
+    favouriteEventsList = eventsList.where((event) {
+      return event.isFavourite == true;
+    }).toList();
+    favouriteEventsList.sort((event1, event2) {
+      return event1.dateTime.compareTo(event2.dateTime);
+    },);
+    notifyListeners();
+  }
+
+  void getAllFavouriteEventsFromFireStore() async {
+    var querySnapShot = await FirebaseUtils.getEventCollection().
+    orderBy('dateTime').where('isFavourite', isEqualTo: true).get();
+    favouriteEventsList = querySnapShot.docs.map((doc) {
+      return doc.data();
+    }
+    ).toList();
     notifyListeners();
   }
 
