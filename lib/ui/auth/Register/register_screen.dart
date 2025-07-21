@@ -1,16 +1,18 @@
 import 'package:evently_app/l10n/app_localizations.dart';
+import 'package:evently_app/ui/home_screen.dart';
 import 'package:evently_app/ui/widgets/custom_elevated_button.dart';
 import 'package:evently_app/ui/widgets/custom_text_form_field.dart';
 import 'package:evently_app/utils/app_assets.dart';
 import 'package:evently_app/utils/app_colors.dart';
 import 'package:evently_app/utils/app_styles.dart';
+import 'package:evently_app/utils/dialog_utils.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:provider/provider.dart';
 
 import '../../../providers/app_language_provider.dart';
 import '../../../providers/app_theme_provider.dart';
-import '../../../utils/app_routes.dart';
 
 class RegisterScreen extends StatefulWidget {
   RegisterScreen({super.key});
@@ -21,10 +23,16 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreen extends State<RegisterScreen> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController nameController = TextEditingController();
-  TextEditingController rePasswordController = TextEditingController();
+  TextEditingController emailController = TextEditingController(
+    text: 'bassant@gmail.com',
+  );
+  TextEditingController passwordController = TextEditingController(
+    text: '123456',
+  );
+  TextEditingController nameController = TextEditingController(text: 'Bassant');
+  TextEditingController rePasswordController = TextEditingController(
+    text: '123456',
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -251,9 +259,75 @@ class _RegisterScreen extends State<RegisterScreen> {
     );
   }
 
-  void register() {
+  void register() async {
     if (formKey.currentState!.validate() == true) {
-      Navigator.of(context).pushReplacementNamed(AppRoutes.homeRouteName);
+      //todo : show loading
+      DialogUtils.showLoading(context: context, loadingMsg: 'Loading...');
+      try {
+        final credential = await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text,
+        );
+        //todo: hide loading
+        DialogUtils.hideLoading(context: context);
+        //todo: show message success
+        DialogUtils.showMsg(context: context,
+            content: 'Register Successfully',
+            title: 'Success',
+            postActionName: 'OK',
+            postFunc: () {
+              // Navigator.of(context).pushReplacementNamed(
+              //     AppRoutes.homeRouteName);
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => HomeScreen()),
+                    (Route<dynamic> route) => false,
+              );
+            }
+        );
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'weak-password') {
+          //todo: hide loading
+          DialogUtils.hideLoading(context: context);
+          //todo: show message
+          DialogUtils.showMsg(context: context,
+            content: 'The password provided is too weak.',
+            title: 'Error',
+            postActionName: 'OK',
+
+          );
+        } else if (e.code == 'email-already-in-use') {
+          //todo: hide loading
+          DialogUtils.hideLoading(context: context);
+          //todo: show message
+          DialogUtils.showMsg(context: context,
+            content: 'The account already exists for that email.',
+            title: 'Error',
+            postActionName: 'OK',
+
+          );
+        } else if (e.code == 'network-request-failed') {
+          //todo: hide loading
+          DialogUtils.hideLoading(context: context);
+          //todo: show message
+          DialogUtils.showMsg(context: context,
+            content: 'A network error such as (timeout - interrupted connection or unreachable host) has occured.',
+            title: 'Error',
+            postActionName: 'OK',
+
+          );
+        }
+      } catch (e) {
+        DialogUtils.hideLoading(context: context);
+        //todo: show message
+        DialogUtils.showMsg(context: context,
+          content: e.toString(),
+          title: 'Error',
+          postActionName: 'OK',
+
+        );
+      }
     }
   }
 }
