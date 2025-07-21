@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:evently_app/utils/app_assets.dart';
 import 'package:evently_app/utils/app_colors.dart';
+import 'package:evently_app/utils/app_routes.dart';
 import 'package:evently_app/utils/app_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,90 +21,99 @@ class EventItem extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     var eventListProvider = Provider.of<EventListProvider>(context);
     return
-      Container(
-      margin: EdgeInsets.symmetric(
-        horizontal: width * .02,
-        vertical: height * .01,
-      ),
-      height: height * .31,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-        image: DecorationImage(
-          fit: BoxFit.fill,
-          image: AssetImage(event.image),
-        ),
-      ),
-        child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            margin: EdgeInsets.symmetric(
-              vertical: height * .02,
-              horizontal: width * .02,
-            ),
-            padding: EdgeInsets.symmetric(
-              vertical: height * .002,
-              horizontal: width * .02,
-            ),
-            decoration: BoxDecoration(
-              color: AppColors.whiteColor,
-              borderRadius: BorderRadiusGeometry.circular(8),
-            ),
-            child: Column(
-              children: [
-                Text(
-                    event.dateTime.day.toString()
-                    , style: AppStyles.bold20Primary),
-                Text(
-                    DateFormat('MMM').format(event.dateTime)
-                    , style: AppStyles.bold14Primary),
-              ],
+      InkWell(
+        onTap: () {
+          Navigator.pushNamed(
+              context, AppRoutes.eventDetailsRouteName, arguments: event);
+        },
+        child: Container(
+          margin: EdgeInsets.symmetric(
+            horizontal: width * .02,
+            vertical: height * .01,
+          ),
+          height: height * .31,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            image: DecorationImage(
+              fit: BoxFit.fill,
+              image: AssetImage(event.image),
             ),
           ),
-          Container(
-            margin: EdgeInsets.symmetric(
-              vertical: height * .02,
-              horizontal: width * .02,
-            ),
-            padding: EdgeInsets.symmetric(
-              vertical: height * .01,
-              horizontal: width * .02,
-            ),
-            decoration: BoxDecoration(
-              color: AppColors.whiteColor,
-              borderRadius: BorderRadiusGeometry.circular(8),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  event.title,
-                  style: Theme.of(context).textTheme.labelLarge,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                margin: EdgeInsets.symmetric(
+                  vertical: height * .02,
+                  horizontal: width * .02,
                 ),
-                InkWell(
-                  onTap: () {
-                    eventListProvider.UpdateEvents(event);
-                  },
-                  child: event.isFavourite == true ?
-                  ImageIcon(
-                    AssetImage(AppAssets.favouiteFilledIcon),
-                    color: AppColors.primaryLight,
-                    size: 25,
-                  )
-                      :
-                  ImageIcon(
-                    AssetImage(AppAssets.unSelectedFavouriteIcon),
-                    color: AppColors.primaryLight,
-                    size: 25,
-                  ),
-                )
+                padding: EdgeInsets.symmetric(
+                  vertical: height * .002,
+                  horizontal: width * .02,
+                ),
+                decoration: BoxDecoration(
+                  color: AppColors.whiteColor,
+                  borderRadius: BorderRadiusGeometry.circular(8),
+                ),
+                child: Column(
+                  children: [
+                    Text(
+                        event.dateTime.day.toString()
+                        , style: AppStyles.bold20Primary),
+                    Text(
+                        DateFormat('MMM').format(event.dateTime)
+                        , style: AppStyles.bold14Primary),
+                  ],
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(
+                  vertical: height * .02,
+                  horizontal: width * .02,
+                ),
+                padding: EdgeInsets.symmetric(
+                  vertical: height * .01,
+                  horizontal: width * .02,
+                ),
+                decoration: BoxDecoration(
+                  color: AppColors.whiteColor,
+                  borderRadius: BorderRadiusGeometry.circular(8),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      event.title,
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .labelLarge,
+                    ),
+                    InkWell(
+                      onTap: () {
+                        eventListProvider.UpdateEvents(event);
+                      },
+                      child: event.isFavourite == true ?
+                      ImageIcon(
+                        AssetImage(AppAssets.favouiteFilledIcon),
+                        color: AppColors.primaryLight,
+                        size: 25,
+                      )
+                          :
+                      ImageIcon(
+                        AssetImage(AppAssets.unSelectedFavouriteIcon),
+                        color: AppColors.primaryLight,
+                        size: 25,
+                      ),
+                    )
 
-              ],
-            ),
+                  ],
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
-    );
+        ),
+      );
   }
 }

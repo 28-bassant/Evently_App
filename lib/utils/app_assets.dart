@@ -72,4 +72,7 @@ class AppAssets {
       'assets/images/workshop_image_dark.png';
   static const String holidayImageDark = 'assets/images/holiday_image_dark.png';
   static const String gammingImageDark = 'assets/images/gaming_image_dark.png';
+  static const String editEventIcon = 'assets/images/edit_event_icon.png';
+  static const String deleteEventIcon = 'assets/images/delete_event_icon.png';
+  static const String mapImage = 'assets/images/map_image.png';
 }

@@ -18,6 +18,7 @@ class CustomTextFormField extends StatelessWidget {
   TextEditingController? controller;
   bool obscureText;
   int? maxLines;
+  TextStyle? textStyle;
 
   CustomTextFormField({
     super.key,
@@ -31,6 +32,7 @@ class CustomTextFormField extends StatelessWidget {
     this.onValidator,
     this.keyboardType,
     this.obscureText = false,
+    this.textStyle
   });
 
   @override
@@ -50,6 +52,7 @@ class CustomTextFormField extends StatelessWidget {
         errorStyle: AppStyles.medium16Grey.copyWith(color: AppColors.redColor),
 
         hintText: hintText,
+
         hintStyle:
             hintStyle ??
             (themeProvider.appTheme == ThemeMode.light
@@ -61,8 +64,8 @@ class CustomTextFormField extends StatelessWidget {
       controller: controller,
       maxLines: maxLines ?? 1,
       style: themeProvider.appTheme == ThemeMode.light
-          ? AppStyles.medium16Black
-          : AppStyles.medium16White,
+          ? textStyle ?? AppStyles.medium16Black
+          : textStyle ?? AppStyles.medium16White,
       validator: onValidator,
       keyboardType: keyboardType,
       obscureText: obscureText,

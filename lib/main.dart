@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:evently_app/edit_event/edit_event.dart';
 import 'package:evently_app/on_boarding/on_boarding_screen.dart';
 import 'package:evently_app/on_boarding/on_boarding_screen1.dart';
 import 'package:evently_app/providers/app_language_provider.dart';
@@ -7,6 +8,7 @@ import 'package:evently_app/providers/event_list_provider.dart';
 import 'package:evently_app/ui/add_event/add_event.dart';
 import 'package:evently_app/ui/auth/Login/login_screen.dart';
 import 'package:evently_app/ui/auth/Register/register_screen.dart';
+import 'package:evently_app/ui/event_details/event_details.dart';
 import 'package:evently_app/ui/home_screen.dart';
 import 'package:evently_app/utils/app_routes.dart';
 import 'package:evently_app/utils/app_theme.dart';
@@ -53,6 +55,8 @@ class MyApp extends StatelessWidget {
         AppRoutes.loginRouteName: (context) => LoginScreen(),
         AppRoutes.registerRouteName: (context) => RegisterScreen(),
         AppRoutes.addEventRouteName: (context) => AddEvent(),
+        AppRoutes.eventDetailsRouteName: (context) => EventDetails(),
+        AppRoutes.editEventRouteName: (context) => EditEvent(),
       },
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
