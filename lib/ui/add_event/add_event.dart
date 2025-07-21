@@ -8,8 +8,8 @@ import 'package:evently_app/ui/widgets/custom_text_form_field.dart';
 import 'package:evently_app/utils/app_assets.dart';
 import 'package:evently_app/utils/app_colors.dart';
 import 'package:evently_app/utils/app_styles.dart';
+import 'package:evently_app/utils/dialog_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -37,6 +37,7 @@ class _AddEventState extends State<AddEvent> {
   String SelectedEventName = '';
   late AppThemeProvider themeProvider;
   late EventListProvider eventListProvider;
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
 
   @override
@@ -97,20 +98,22 @@ class _AddEventState extends State<AddEvent> {
           vertical: height * .02,
         ),
         child: SingleChildScrollView(
-          child: Column(
+          child: Form(
+              key: formKey,
+              child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Center(
                 child: ClipRRect(
                   child: themeProvider.iSDark()
                       ? Image.asset(
-                          eventImageDarkList[selectedIndex],
-                          height: height * .2,
-                        )
+                    eventImageDarkList[selectedIndex],
+                    height: height * .2,
+                  )
                       : Image.asset(
-                          eventImageLightList[selectedIndex],
-                          height: height * .2,
-                        ),
+                    eventImageLightList[selectedIndex],
+                    height: height * .2,
+                  ),
 
                   borderRadius: BorderRadius.circular(16),
                 ),
@@ -152,7 +155,14 @@ class _AddEventState extends State<AddEvent> {
               SizedBox(height: height * .02),
               CustomTextFormField(
                 controller: eventTitleController,
-                hintText: AppLocalizations.of(context)!.event_time,
+                onValidator: (text) {
+                  if (text == null || text
+                      .trim()
+                      .isEmpty) {
+                    return AppLocalizations.of(context)!.event_title_required;
+                  }
+                },
+                hintText: AppLocalizations.of(context)!.event_title,
                 prefixIcon: Image.asset(
                   AppAssets.editIcon,
                   color: themeProvider.iSDark()
@@ -168,7 +178,13 @@ class _AddEventState extends State<AddEvent> {
               SizedBox(height: height * .02),
               CustomTextFormField(
                 controller: eventDescriptionController,
-
+                onValidator: (text) {
+                  if (text == null || text
+                      .trim()
+                      .isEmpty) {
+                    return AppLocalizations.of(context)!.event_desc_required;
+                  }
+                },
                 hintText: AppLocalizations.of(context)!.event_description,
                 maxLines: 4,
               ),
@@ -234,7 +250,7 @@ class _AddEventState extends State<AddEvent> {
                 onPressed: AddEvent,
               ),
             ],
-          ),
+              )),
         ),
       ),
     );
@@ -263,22 +279,40 @@ class _AddEventState extends State<AddEvent> {
   }
 
   void AddEvent() {
-    Event event = Event(
-        title: eventTitleController.text,
-        description: eventDescriptionController.text,
-        image: themeProvider.iSDark() ? SelectedDarkImage : SelectedLightImage,
-        dateTime: selectedDate!,
-        eventName: SelectedEventName,
-        time: formatTime!);
-    FirebaseUtils.addEventToFireStore(event).timeout(
-      Duration(milliseconds: 500),
-      onTimeout: () {
-        ToastUtils.ShowToast(
-            msg: AppLocalizations.of(context)!.event_added_successfully,
-            bgColor: AppColors.primaryLight,
-            textColor: AppColors.whiteColor);
-        eventListProvider.getAllEvents();
-        Navigator.pop(context);
-      },);
+    if (formKey.currentState!.validate() == true) {
+      if (selectedDate == null) {
+        DialogUtils.showMsg(context: context,
+          content: AppLocalizations.of(context)!.event_date_required,
+          postActionName: 'Ok',
+        );
+      } else if (selectedTime == null) {
+        DialogUtils.showMsg(context: context,
+          content: AppLocalizations.of(context)!.event_time_required,
+          postActionName: 'Ok',
+        );
+      }
+      Event event = Event(
+          title: eventTitleController.text,
+          description: eventDescriptionController.text,
+          image: themeProvider.iSDark()
+              ? SelectedDarkImage
+              : SelectedLightImage,
+          dateTime: selectedDate!,
+          eventName: SelectedEventName,
+          time: formatTime!);
+
+
+      FirebaseUtils.addEventToFireStore(event).timeout(
+        Duration(milliseconds: 500),
+        onTimeout: () {
+          ToastUtils.ShowToast(
+              msg: AppLocalizations.of(context)!.event_added_successfully,
+              bgColor: AppColors.primaryLight,
+              textColor: AppColors.whiteColor);
+          eventListProvider.getAllEvents();
+          Navigator.pop(context);
+        },);
+    }
+
   }
 }

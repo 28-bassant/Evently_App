@@ -9,6 +9,7 @@ import 'package:evently_app/utils/dialog_utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 
 import '../../../providers/app_language_provider.dart';
@@ -186,7 +187,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       CustomElevatedButton(
                         text: AppLocalizations.of(context)!.login_with_google,
                         textStyle: AppStyles.medium20Primary,
+                        onPressed: () => signInWithGoogle(),
                         isIcon: true,
+
                         iconWidget: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -203,7 +206,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
 
                         //iconWidget: Image.asset(AppAssets.iconGoogle),
-                        backgroundColor: AppColors.transparentColor,
+                        backgroundColor: AppColors.whiteBgColor,
                         mainAxisAlignment: MainAxisAlignment.center,
                       ),
                     ],
@@ -306,4 +309,45 @@ class _LoginScreenState extends State<LoginScreen> {
       }
     }
   }
+
+  Future<UserCredential> signInWithGoogle() async {
+    // Trigger the authentication flow
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication? googleAuth = await googleUser
+        ?.authentication;
+
+    // Create a new credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+
+    // Once signed in, return the UserCredential
+    return await FirebaseAuth.instance.signInWithCredential(credential);
+  }
+// Future<void> signInWithGoogle() async {
+//   try {
+//     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+//     if (googleUser == null) {
+//       // User canceled the sign-in
+//       return;
+//     }
+//
+//     final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+//     final AuthCredential credential = GoogleAuthProvider.credential(
+//       accessToken: googleAuth.accessToken,
+//       idToken: googleAuth.idToken,
+//     );
+//
+//     final UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+//     final User? user = userCredential.user;
+//
+//     // Handle the signed-in user (e.g., navigate to a new screen)
+//     print('Signed in: ${user?.displayName}');
+//   } catch (e) {
+//     print('Error signing in with Google: $e');
+//   }
+// }
 }

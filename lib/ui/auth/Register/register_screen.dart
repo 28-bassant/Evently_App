@@ -121,8 +121,8 @@ class _RegisterScreen extends State<RegisterScreen> {
                         prefixIcon: themeProvider.appTheme == ThemeMode.light
                             ? Image(image: AssetImage(AppAssets.iconPassword))
                             : Image(
-                                image: AssetImage(AppAssets.darkPasswordIcon),
-                              ),
+                          image: AssetImage(AppAssets.darkPasswordIcon),
+                        ),
                         controller: passwordController,
                         keyboardType: TextInputType.number,
                         suffixIcon: themeProvider.appTheme == ThemeMode.light
@@ -149,8 +149,8 @@ class _RegisterScreen extends State<RegisterScreen> {
                         prefixIcon: themeProvider.appTheme == ThemeMode.light
                             ? Image(image: AssetImage(AppAssets.iconPassword))
                             : Image(
-                                image: AssetImage(AppAssets.darkPasswordIcon),
-                              ),
+                          image: AssetImage(AppAssets.darkPasswordIcon),
+                        ),
                         controller: rePasswordController,
                         keyboardType: TextInputType.number,
                         suffixIcon: themeProvider == ThemeMode.light
@@ -331,3 +331,4 @@ class _RegisterScreen extends State<RegisterScreen> {
     }
   }
 }
+

@@ -64,7 +64,13 @@
 "add_event": "إضافة فعالية",
 "no_events_found" : "لم يتم العثور على فعاليات",
 "no_favourite_events_found" : "لم يتم العثور على فعاليات مفضلة",
-"event_added_successfully" : "تمت إضافة الفعالية بنجاح"
+"event_added_successfully" : "تمت إضافة الفعالية بنجاح",
+"event_title_required": "عنوان الحدث مطلوب",
+"event_desc_required": "وصف الحدث مطلوب",
+"event_date_required": "تاريخ الحدث مطلوب",
+"event_time_required": "وقت الحدث مطلوب"
+
+
 
 
 
