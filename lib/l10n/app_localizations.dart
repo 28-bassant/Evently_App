@@ -493,6 +493,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Event Added Successfully'**
   String get event_added_successfully;
+
+  /// No description provided for @event_title_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Event title required'**
+  String get event_title_required;
+
+  /// No description provided for @event_desc_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Event description required'**
+  String get event_desc_required;
+
+  /// No description provided for @event_date_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Event Date required'**
+  String get event_date_required;
+
+  /// No description provided for @event_time_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Event Time required'**
+  String get event_time_required;
 }
 
 class _AppLocalizationsDelegate

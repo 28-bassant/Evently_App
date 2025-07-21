@@ -1,5 +1,6 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
+
 import 'app_localizations.dart';
 
 // ignore_for_file: type=lint
@@ -211,4 +212,16 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get event_added_successfully => 'تمت إضافة الفعالية بنجاح';
+
+  @override
+  String get event_title_required => 'عنوان الحدث مطلوب';
+
+  @override
+  String get event_desc_required => 'وصف الحدث مطلوب';
+
+  @override
+  String get event_date_required => 'تاريخ الحدث مطلوب';
+
+  @override
+  String get event_time_required => 'وقت الحدث مطلوب';
 }

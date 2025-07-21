@@ -64,7 +64,11 @@
 "add_event" : "Add Event",
 "no_events_found" : "No Events Found",
 "no_favourite_events_found" : "No Favourite Events Found",
-"event_added_successfully" : "Event Added Successfully"
+"event_added_successfully" : "Event Added Successfully",
+"event_title_required" : "Event title required",
+"event_desc_required" : "Event description required",
+"event_date_required" : "Event Date required",
+"event_time_required" : "Event Time required"
 
 
 
