@@ -103,6 +103,11 @@ static TextStyle medium16White = GoogleFonts.inter(
     fontWeight: FontWeight.bold,
     color: AppColors.whiteColor,
   );
+  static TextStyle bold14red = GoogleFonts.inter(
+    fontSize: 14,
+    fontWeight: FontWeight.bold,
+    color: AppColors.redColor,
+  );
   static TextStyle bold16White = GoogleFonts.inter(
     fontSize: 16,
     fontWeight: FontWeight.bold,

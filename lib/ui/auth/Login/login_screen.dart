@@ -5,6 +5,8 @@ import 'package:evently_app/utils/app_assets.dart';
 import 'package:evently_app/utils/app_colors.dart';
 import 'package:evently_app/utils/app_routes.dart';
 import 'package:evently_app/utils/app_styles.dart';
+import 'package:evently_app/utils/dialog_utils.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:provider/provider.dart';
@@ -21,8 +23,10 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  TextEditingController emailController = TextEditingController(
+      text: 'bassant@gmail.com');
+  TextEditingController passwordController = TextEditingController(
+      text: '123456');
 
   @override
   Widget build(BuildContext context) {
@@ -253,9 +257,53 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  void login() {
+  void login() async {
     if (formKey.currentState!.validate() == true) {
-      Navigator.of(context).pushReplacementNamed(AppRoutes.homeRouteName);
+      //todo: show loading
+      DialogUtils.showLoading(context: context, loadingMsg: 'Loading...');
+      try {
+        final credential = await FirebaseAuth.instance
+            .signInWithEmailAndPassword(
+            email: emailController.text,
+            password: passwordController.text
+        );
+        //todo: hide loading
+        DialogUtils.hideLoading(context: context);
+        //todo: show message success
+        DialogUtils.showMsg(context: context,
+            content: 'Login Successfully',
+            title: 'Success',
+            postActionName: 'Ok',
+            postFunc: () {
+              Navigator.of(context).pushReplacementNamed(
+                  AppRoutes.homeRouteName);
+            });
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'network-request-failed') {
+          //todo: hide loading
+          DialogUtils.hideLoading(context: context);
+          //todo: show message success
+          DialogUtils.showMsg(
+            context: context,
+            content: 'A network error such as (timeout - interrupted connection or unreachable host) has occured.',
+            title: 'Error',
+            postActionName: 'Ok',);
+        }
+        else if (e.code == 'invalid-credential') {
+          DialogUtils.hideLoading(context: context);
+          DialogUtils.showMsg(context: context,
+            content: 'User not found or Password is wrong .',
+            title: 'Error',
+            postActionName: 'Ok',);
+        }
+      }
+      catch (e) {
+        DialogUtils.hideLoading(context: context);
+        DialogUtils.showMsg(context: context,
+          content: e.toString(),
+          title: 'Error',
+          postActionName: 'Ok',);
+      }
     }
   }
 }
