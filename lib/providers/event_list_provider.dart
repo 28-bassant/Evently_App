@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:evently_app/l10n/app_localizations.dart';
 import 'package:evently_app/ui/toast_utils.dart';
 import 'package:evently_app/utils/app_colors.dart';
 import 'package:evently_app/utils/app_styles.dart';
 import 'package:flutter/material.dart';
-import 'package:evently_app/l10n/app_localizations.dart';
 
 import '../firebase_utils.dart';
 import '../models/event.dart';
@@ -109,7 +109,24 @@ class EventListProvider extends ChangeNotifier {
     favouriteEventsList = querySnapShot.docs.map((doc) {
       return doc.data();
     }
-    ).toList();
+    ).toList();electedIndex == 0 ? getAllEvents() : getFilterEventsFromFireStore();
+    nnotifyListeners();
+
+  }oid deleteEvent(Event event) {
+    var querySnapShot = FirebaseUtils.getEventCollection()
+        .doc(event.id)
+        .delete()
+        .timeout(
+          Duration(milliseconds: 500),
+          onTimeout: () {
+            ToastUtils.ShowToast(
+              msg: 'Event deleted Successfully',
+              bgColor: AppColors.redColor,
+              textColor: AppColors.whiteColor,
+            );
+          },
+        );
+    selectedIndex == 0 ? getAllEvents() : getFilterEventsFromFireStore();
     notifyListeners();
   }
 

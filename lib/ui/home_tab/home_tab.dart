@@ -1,4 +1,5 @@
 import 'package:evently_app/l10n/app_localizations.dart';
+import 'package:evently_app/models/event.dart';
 import 'package:evently_app/providers/event_list_provider.dart';
 import 'package:evently_app/ui/home_tab/widget/event_item.dart';
 import 'package:evently_app/ui/home_tab/widget/event_tab_item.dart';
@@ -16,13 +17,25 @@ class HomeTab extends StatefulWidget {
 }
 
 class _HomeTabState extends State<HomeTab> {
+  late EventListProvider eventListProvider;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      //eventListProvider.getAllFavouriteEvents();
+      eventListProvider.getAllEvents();
+    });
+  }
   @override
   Widget build(BuildContext context) {
-    var eventListProvider = Provider.of<EventListProvider>(context);
+    eventListProvider = Provider.of<EventListProvider>(context);
     eventListProvider.getEventNameList(context);
     if (eventListProvider.eventsList.isEmpty) {
       eventListProvider.getAllEvents();
     }
+
 
     var height = MediaQuery
         .of(context)

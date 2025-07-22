@@ -6,7 +6,11 @@ import 'package:evently_app/utils/app_assets.dart';
 import 'package:evently_app/utils/app_colors.dart';
 import 'package:evently_app/utils/app_routes.dart';
 import 'package:evently_app/utils/app_styles.dart';
+import 'package:evently_app/utils/dialog_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../providers/event_list_provider.dart';
 
 class EventDetails extends StatelessWidget {
   const EventDetails({super.key});
@@ -16,6 +20,9 @@ class EventDetails extends StatelessWidget {
     Event args = ModalRoute.of(context)?.settings.arguments as Event;
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
+    var eventListProvider = Provider.of<EventListProvider>(context);
+
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -33,9 +40,28 @@ class EventDetails extends StatelessWidget {
             child: ImageIcon(AssetImage(AppAssets.editEventIcon)),
           ),
           SizedBox(width: width * .02),
-          ImageIcon(
-            AssetImage(AppAssets.deleteEventIcon),
-            color: AppColors.redColor,
+          InkWell(
+            onTap: () {
+              DialogUtils.showMsg(
+                  context: context,
+                  content: 'Are you Sure you want to delete event?',
+                  negativeActionName: 'No',
+                  negativeFunc: () {
+                    Navigator.pop(context);
+                  },
+                  postActionName: 'Yes',
+                  postFunc: () {
+                    eventListProvider.deleteEvent(args);
+                    Navigator.pop(context);
+                  }
+
+
+              );
+            },
+            child: ImageIcon(
+              AssetImage(AppAssets.deleteEventIcon),
+              color: AppColors.redColor,
+            ),
           ),
           SizedBox(width: width * .02),
         ],
