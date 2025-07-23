@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../models/event.dart';
+import '../providers/app_theme_provider.dart';
 import '../providers/event_list_provider.dart';
 import '../ui/add_event/widgets/event_date_or_time.dart';
 import '../ui/home_tab/widget/event_tab_item.dart';
@@ -21,41 +22,89 @@ class EditEvent extends StatefulWidget {
 }
 
 class _EditEventState extends State<EditEvent> {
+  late Event event;
+  bool isInitialized = false;
+  late TextEditingController titleController;
+
+  late TextEditingController descriptionController;
+
+  late DateTime dateTime;
+
+  late String time;
+  late int selectedIndex;
+
+  DateTime? selectedDate;
+  String? formatDate;
+  TimeOfDay? selectedTime;
+  String? formatTime;
+  String? selectedEventName;
+  String? selectedEventImage;
+  List<String> eventNameList = [];
+  List<String> eventImageLightList = [];
+  List<String> eventImageDarkList = [];
+
+  @override
+  void didChangeDependencies() {
+    if (!isInitialized) {
+      event = ModalRoute
+          .of(context)!
+          .settings
+          .arguments as Event;
+      eventNameList = [
+        AppLocalizations.of(context)!.sport,
+        AppLocalizations.of(context)!.birthday,
+        AppLocalizations.of(context)!.meeting,
+        AppLocalizations.of(context)!.gaming,
+        AppLocalizations.of(context)!.workshop,
+        AppLocalizations.of(context)!.book_club,
+        AppLocalizations.of(context)!.exhibition,
+        AppLocalizations.of(context)!.holiday,
+        AppLocalizations.of(context)!.eating,
+      ];
+      eventImageLightList = [
+        AppAssets.sportImageLight,
+        AppAssets.birthdayImageLight,
+        AppAssets.meetingImageLight,
+        AppAssets.gammingImageLight,
+        AppAssets.workShopImageLight,
+        AppAssets.bookClubImageLight,
+        AppAssets.exhibitionImageLight,
+        AppAssets.holidayImageLight,
+        AppAssets.eatingImageLight,
+      ];
+      List<String> eventImageDarkList = [
+        AppAssets.sportImageDark,
+        AppAssets.birthdayImageDark,
+        AppAssets.meetingImageDark,
+        AppAssets.gammingImageDark,
+        AppAssets.workShopImageDark,
+        AppAssets.bookClubImageDark,
+        AppAssets.exhibitionImageDark,
+        AppAssets.holidayImageDark,
+        AppAssets.eatingImageDark,
+      ];
+      titleController = TextEditingController(text: event.title);
+      descriptionController = TextEditingController(text: event.description);
+      dateTime = event.dateTime;
+      time = event.time;
+      selectedIndex = eventNameList.indexOf(event.eventName);
+      if (selectedIndex == -1) {
+        selectedIndex = 0;
+      }
+      selectedEventName = eventNameList[selectedIndex];
+      selectedEventImage = eventImageLightList[selectedIndex];
+      isInitialized = true;
+    }
+    super.didChangeDependencies();
+  }
+
+
   @override
   Widget build(BuildContext context) {
-    Event args = ModalRoute.of(context)?.settings.arguments as Event;
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     var eventListProvider = Provider.of<EventListProvider>(context);
-    TextEditingController titleController = TextEditingController(
-      text: args.title,
-    );
-    TextEditingController descriptionController = TextEditingController(
-      text: args.description,
-    );
-    List<String> eventNameList = [
-      AppLocalizations.of(context)!.sport,
-      AppLocalizations.of(context)!.birthday,
-      AppLocalizations.of(context)!.meeting,
-      AppLocalizations.of(context)!.gaming,
-      AppLocalizations.of(context)!.workshop,
-      AppLocalizations.of(context)!.book_club,
-      AppLocalizations.of(context)!.exhibition,
-      AppLocalizations.of(context)!.holiday,
-      AppLocalizations.of(context)!.eating,
-    ];
-    List<String> eventImageLightList = [
-      AppAssets.sportImageLight,
-      AppAssets.birthdayImageLight,
-      AppAssets.meetingImageLight,
-      AppAssets.gammingImageLight,
-      AppAssets.workShopImageLight,
-      AppAssets.bookClubImageLight,
-      AppAssets.exhibitionImageLight,
-      AppAssets.holidayImageLight,
-      AppAssets.eatingImageLight,
-    ];
-    int selectedIndex = 0;
+    var themeProvider = Provider.of<AppThemeProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -71,9 +120,16 @@ class _EditEventState extends State<EditEvent> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(16),
-                child: Image.asset(args.image),
+              Center(
+                child: ClipRRect(
+                  child: Image.asset(
+                    selectedEventImage ?? event.image,
+                    height: height * .2,
+                  ),
+                  borderRadius: BorderRadius.circular(16),
+
+
+                ),
               ),
               SizedBox(height: height * .02),
               SizedBox(
@@ -83,11 +139,9 @@ class _EditEventState extends State<EditEvent> {
                   itemBuilder: (context, index) {
                     return InkWell(
                       onTap: () {
-                        // selectedIndex = index;
-                        // setState(() {});
-                        if (args.eventName == eventNameList[index]) {
-                          selectedIndex = index;
-                        }
+                        selectedIndex = index;
+                        selectedEventName = eventNameList[index];
+                        selectedEventImage = eventImageLightList[index];
                         setState(() {});
                       },
                       child: EventTabItem(
@@ -98,20 +152,23 @@ class _EditEventState extends State<EditEvent> {
                         eventName: eventNameList[index],
                         unSelecetdEventTextStyle: AppStyles.bold16Primary,
                         borderColor: AppColors.primaryLight,
-                        isSelected: args.eventName == eventNameList[index],
+                        isSelected: selectedIndex == index,
                       ),
                     );
                   },
                   separatorBuilder: (context, index) {
                     return SizedBox(width: width * .01);
                   },
-                  itemCount: 9,
+                  itemCount: eventNameList.length,
                 ),
               ),
               SizedBox(height: height * .02),
               Text(
                 AppLocalizations.of(context)!.title,
-                style: Theme.of(context).textTheme.titleMedium,
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .titleMedium,
               ),
               SizedBox(height: height * .01),
               CustomTextFormField(
@@ -126,7 +183,10 @@ class _EditEventState extends State<EditEvent> {
               SizedBox(height: height * .02),
               Text(
                 AppLocalizations.of(context)!.description,
-                style: Theme.of(context).textTheme.titleMedium,
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .titleMedium,
               ),
               SizedBox(height: height * .01),
               CustomTextFormField(
@@ -138,21 +198,24 @@ class _EditEventState extends State<EditEvent> {
               EventDateOrTime(
                 eventDateOrItemIcon: AppAssets.eventDateIcon,
                 eventDateOrItemName: AppLocalizations.of(context)!.event_date,
-                chooseDateOrTime: DateFormat(
-                  'dd/MM/yyyy',
-                ).format(args.dateTime!),
+                chooseDateOrTime: DateFormat('dd/MM/yyyy').format(
+                    selectedDate ?? event.dateTime),
+
                 chooseDateOrTimeClicked: ChooseDate,
               ),
               EventDateOrTime(
                 eventDateOrItemIcon: AppAssets.eventTimeIcon,
                 eventDateOrItemName: AppLocalizations.of(context)!.event_time,
-                chooseDateOrTime: args.time,
+                chooseDateOrTime: formatTime ?? event.time,
                 chooseDateOrTimeClicked: ChooseTime,
               ),
               SizedBox(height: height * .02),
               Text(
                 AppLocalizations.of(context)!.location,
-                style: Theme.of(context).textTheme.titleMedium,
+                style: Theme
+                    .of(context)
+                    .textTheme
+                    .titleMedium,
               ),
               SizedBox(height: height * .01),
               CustomElevatedButton(
@@ -193,7 +256,16 @@ class _EditEventState extends State<EditEvent> {
                 width: double.infinity,
                 child: CustomElevatedButton(
                   text: 'Update Event',
-                  onPressed: updateEvent,
+                  onPressed: () {
+                    // eventListProvider.editEvent(E);
+                    updateEvent();
+                    print('event title ${event.title}');
+                    print('event desc ${event.description}');
+                    setState(() {
+
+                    });
+                    Navigator.pop(context);
+                  },
                 ),
               ),
               SizedBox(height: height * .02),
@@ -211,6 +283,9 @@ class _EditEventState extends State<EditEvent> {
       firstDate: DateTime.now(),
       lastDate: DateTime.now().add(Duration(days: 365)),
     );
+    selectedDate = chooseDate;
+    formatDate = DateFormat('dd/MM/yyyy').format(selectedDate!);
+    setState(() {});
   }
 
   void ChooseTime() async {
@@ -218,7 +293,24 @@ class _EditEventState extends State<EditEvent> {
       context: context,
       initialTime: TimeOfDay.now(),
     );
+    selectedTime = chooseTime;
+    formatTime = selectedTime!.format(context);
+    setState(() {});
   }
 
-  void updateEvent() {}
+  void updateEvent() {
+    final newEvent = Event(
+      id: event.id,
+      title: titleController.text,
+      description: descriptionController.text,
+      image: selectedEventImage ?? event.image,
+      eventName: selectedEventName ?? '',
+      dateTime: selectedDate ?? event.dateTime,
+      time: formatTime ?? event.time,
+    );
+    Provider.of<EventListProvider>(context, listen: false).editEvent(newEvent);
+    Provider.of<EventListProvider>(context, listen: false).getAllEvents();
+    Navigator.pop(context);
+  }
+
 }
