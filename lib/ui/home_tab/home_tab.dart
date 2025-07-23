@@ -18,14 +18,16 @@ class HomeTab extends StatefulWidget {
 
 class _HomeTabState extends State<HomeTab> {
   late EventListProvider eventListProvider;
-
+  late Event event;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       //eventListProvider.getAllFavouriteEvents();
+
       eventListProvider.getAllEvents();
+
     });
   }
   @override

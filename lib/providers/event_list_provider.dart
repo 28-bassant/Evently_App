@@ -13,8 +13,7 @@ class EventListProvider extends ChangeNotifier {
   List<Event> favouriteEventsList = [];
   List<String> eventNameList = [];
   int selectedIndex = 0;
-
-
+  Event? updateEvent;
   List<String> getEventNameList(BuildContext context) {
     return eventNameList = [
       AppLocalizations.of(context)!.all,
@@ -128,6 +127,17 @@ class EventListProvider extends ChangeNotifier {
           },
         );
     selectedIndex == 0 ? getAllEvents() : getFilterEventsFromFireStore();
+    notifyListeners();
+  }
+
+  void editEvent(Event event) async {
+    await FirebaseUtils.getEventCollection().doc(event.id).update(
+        event.toFireStore());
+    ToastUtils.ShowToast(
+      msg: 'Event Edited Successfully',
+      bgColor: AppColors.greenColor,
+      textColor: AppColors.whiteColor,
+    );
     notifyListeners();
   }
 
