@@ -1,4 +1,5 @@
 import 'package:evently_app/l10n/app_localizations.dart';
+import 'package:evently_app/providers/user_provider.dart';
 import 'package:evently_app/ui/widgets/custom_text_form_field.dart';
 import 'package:evently_app/utils/app_assets.dart';
 import 'package:evently_app/utils/app_colors.dart';
@@ -20,13 +21,15 @@ class _FavouriteTabState extends State<FavouriteTab> {
   TextEditingController searchController = TextEditingController();
   @override
   late EventListProvider eventListProvider;
+  late UserProvider userProvider;
 
   void initState() {
     // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       //eventListProvider.getAllFavouriteEvents();
-      eventListProvider.getAllFavouriteEventsFromFireStore();
+      eventListProvider.getAllFavouriteEventsFromFireStore(
+          userProvider.currentUser!.id);
     });
   }
   @override
@@ -34,6 +37,7 @@ class _FavouriteTabState extends State<FavouriteTab> {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     eventListProvider = Provider.of<EventListProvider>(context);
+    userProvider = Provider.of<UserProvider>(context);
 
     return Scaffold(
       body: SafeArea(

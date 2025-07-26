@@ -1,4 +1,7 @@
+import 'package:evently_app/firebase_utils.dart';
 import 'package:evently_app/l10n/app_localizations.dart';
+import 'package:evently_app/providers/event_list_provider.dart';
+import 'package:evently_app/providers/user_provider.dart';
 import 'package:evently_app/ui/widgets/custom_elevated_button.dart';
 import 'package:evently_app/ui/widgets/custom_text_form_field.dart';
 import 'package:evently_app/utils/app_assets.dart';
@@ -34,8 +37,14 @@ class _LoginScreenState extends State<LoginScreen> {
     var langageProvider = Provider.of<AppLanguageProvider>(context);
     var themeProvider = Provider.of<AppThemeProvider>(context);
     bool status = false;
-    var width = MediaQuery.of(context).size.width;
-    var height = MediaQuery.of(context).size.height;
+    var width = MediaQuery
+        .of(context)
+        .size
+        .width;
+    var height = MediaQuery
+        .of(context)
+        .size
+        .height;
 
     return Scaffold(
       body: SafeArea(
@@ -63,7 +72,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         keyboardType: TextInputType.emailAddress,
                         controller: emailController,
                         onValidator: (text) {
-                          if (text == null || text.trim().isEmpty) {
+                          if (text == null || text
+                              .trim()
+                              .isEmpty) {
                             return AppLocalizations.of(
                               context,
                             )!.please_enter_email;
@@ -86,8 +97,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         prefixIcon: themeProvider.appTheme == ThemeMode.light
                             ? Image(image: AssetImage(AppAssets.iconPassword))
                             : Image(
-                                image: AssetImage(AppAssets.darkPasswordIcon),
-                              ),
+                          image: AssetImage(AppAssets.darkPasswordIcon),
+                        ),
                         controller: passwordController,
                         keyboardType: TextInputType.number,
                         suffixIcon: themeProvider.appTheme == ThemeMode.light
@@ -95,7 +106,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             : Image(image: AssetImage(AppAssets.darkShowIcon)),
                         obscureText: true,
                         onValidator: (text) {
-                          if (text == null || text.trim().isEmpty) {
+                          if (text == null || text
+                              .trim()
+                              .isEmpty) {
                             return AppLocalizations.of(
                               context,
                             )!.please_enter_password;
@@ -265,11 +278,26 @@ class _LoginScreenState extends State<LoginScreen> {
       //todo: show loading
       DialogUtils.showLoading(context: context, loadingMsg: 'Loading...');
       try {
+        //todo: signIn in firebase auth
         final credential = await FirebaseAuth.instance
             .signInWithEmailAndPassword(
             email: emailController.text,
             password: passwordController.text
         );
+        //todo:read user from fireStore
+        var user = await FirebaseUtils.readUserFromFireStore(
+            credential.user?.uid ?? '');
+        if (user == null) {
+          return;
+        }
+        //todo: save user in provider
+        var userProvider = Provider.of<UserProvider>(context, listen: false);
+        userProvider.updateUser(user);
+        var eventListProvider = Provider.of<EventListProvider>(
+            context, listen: false);
+        eventListProvider.changeSelectedIndex(0, userProvider.currentUser!.id);
+        eventListProvider.getAllFavouriteEventsFromFireStore(
+            userProvider.currentUser!.id);
         //todo: hide loading
         DialogUtils.hideLoading(context: context);
         //todo: show message success
@@ -280,6 +308,7 @@ class _LoginScreenState extends State<LoginScreen> {
             postFunc: () {
               Navigator.of(context).pushReplacementNamed(
                   AppRoutes.homeRouteName);
+
             });
       } on FirebaseAuthException catch (e) {
         if (e.code == 'network-request-failed') {
@@ -327,27 +356,5 @@ class _LoginScreenState extends State<LoginScreen> {
     // Once signed in, return the UserCredential
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }
-// Future<void> signInWithGoogle() async {
-//   try {
-//     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-//     if (googleUser == null) {
-//       // User canceled the sign-in
-//       return;
-//     }
-//
-//     final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-//     final AuthCredential credential = GoogleAuthProvider.credential(
-//       accessToken: googleAuth.accessToken,
-//       idToken: googleAuth.idToken,
-//     );
-//
-//     final UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
-//     final User? user = userCredential.user;
-//
-//     // Handle the signed-in user (e.g., navigate to a new screen)
-//     print('Signed in: ${user?.displayName}');
-//   } catch (e) {
-//     print('Error signing in with Google: $e');
-//   }
-// }
+
 }

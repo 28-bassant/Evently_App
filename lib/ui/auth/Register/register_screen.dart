@@ -1,4 +1,6 @@
+import 'package:evently_app/firebase_utils.dart';
 import 'package:evently_app/l10n/app_localizations.dart';
+import 'package:evently_app/models/my_user.dart';
 import 'package:evently_app/ui/home_screen.dart';
 import 'package:evently_app/ui/widgets/custom_elevated_button.dart';
 import 'package:evently_app/ui/widgets/custom_text_form_field.dart';
@@ -13,6 +15,8 @@ import 'package:provider/provider.dart';
 
 import '../../../providers/app_language_provider.dart';
 import '../../../providers/app_theme_provider.dart';
+import '../../../providers/event_list_provider.dart';
+import '../../../providers/user_provider.dart';
 
 class RegisterScreen extends StatefulWidget {
   RegisterScreen({super.key});
@@ -264,11 +268,27 @@ class _RegisterScreen extends State<RegisterScreen> {
       //todo : show loading
       DialogUtils.showLoading(context: context, loadingMsg: 'Loading...');
       try {
+        //todo : sign up in firebase auth
         final credential = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(
           email: emailController.text,
           password: passwordController.text,
         );
+        //todo: ave user in fireStore
+        MyUser myUser = MyUser(
+            id: credential.user?.uid ?? '',
+            name: nameController.text,
+            email: emailController.text);
+        await FirebaseUtils.addUserToFireStore(myUser);
+        //todo: save user in provider
+        var userProvider = Provider.of<UserProvider>(context, listen: false);
+        userProvider.updateUser(myUser);
+        var eventListProvider = Provider.of<EventListProvider>(
+            context, listen: false);
+        eventListProvider.changeSelectedIndex(0, userProvider.currentUser!.id);
+        eventListProvider.getAllFavouriteEventsFromFireStore(
+            userProvider.currentUser!.id);
+
         //todo: hide loading
         DialogUtils.hideLoading(context: context);
         //todo: show message success
@@ -277,8 +297,6 @@ class _RegisterScreen extends State<RegisterScreen> {
             title: 'Success',
             postActionName: 'OK',
             postFunc: () {
-              // Navigator.of(context).pushReplacementNamed(
-              //     AppRoutes.homeRouteName);
               Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(builder: (context) => HomeScreen()),

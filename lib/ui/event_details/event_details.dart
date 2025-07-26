@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/event_list_provider.dart';
+import '../../providers/user_provider.dart';
 
 class EventDetails extends StatelessWidget {
   const EventDetails({super.key});
@@ -51,7 +52,11 @@ class EventDetails extends StatelessWidget {
                   },
                   postActionName: 'Yes',
                   postFunc: () {
-                    eventListProvider.deleteEvent(args);
+                    var userProvider = Provider.of<UserProvider>(
+                        context, listen: false);
+
+                    eventListProvider.deleteEvent(
+                        args, userProvider.currentUser!.id);
                     Navigator.pop(context);
                   }
 

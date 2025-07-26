@@ -29,9 +29,9 @@ class EventListProvider extends ChangeNotifier {
     ];
   }
 
-  void getAllEvents() async {
+  void getAllEvents(String uId) async {
     QuerySnapshot<Event> querySnapShot =
-        await FirebaseUtils.getEventCollection().get();
+    await FirebaseUtils.getEventCollection(uId).get();
     eventsList = querySnapShot.docs.map((doc) {
       return doc.data();
     }).toList();
@@ -42,9 +42,9 @@ class EventListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void getFilterEvents() async {
+  void getFilterEvents(String uId) async {
     QuerySnapshot<Event> querySnapShot =
-        await FirebaseUtils.getEventCollection().get();
+    await FirebaseUtils.getEventCollection(uId).get();
     eventsList = querySnapShot.docs.map((doc) {
       return doc.data();
     }).toList();
@@ -57,8 +57,8 @@ class EventListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void getFilterEventsFromFireStore() async {
-    var querySnapShot = await FirebaseUtils.getEventCollection()
+  void getFilterEventsFromFireStore(String uId) async {
+    var querySnapShot = await FirebaseUtils.getEventCollection(uId)
         .orderBy('dateTime')
         .where('eventName', isEqualTo: eventNameList[selectedIndex])
         .get();
@@ -68,27 +68,40 @@ class EventListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void UpdateEvents(Event event) {
-    FirebaseUtils.getEventCollection().doc(event.id).
-    update({'isFavourite': !event.isFavourite}).timeout(Duration(
-      milliseconds: 500,
+  void UpdateEvents(Event event, String uId) {
+    FirebaseUtils.getEventCollection(uId).doc(event.id).
+    update({'isFavourite': !event.isFavourite}).then((value) {
+      ToastUtils.ShowToast(
+          msg: 'Event Updated Successfully',
+          bgColor: AppColors.greenColor,
+          textColor: AppColors.whiteColor);
+      selectedIndex == 0 ? getAllEvents(uId) : getFilterEventsFromFireStore(
+          uId);
+      //getAllFavouriteEvents();
+      getAllFavouriteEventsFromFireStore(uId);
+    },);
 
-    ),
-      onTimeout: () {
-        ToastUtils.ShowToast(
-            msg: 'Event Updated Successfully',
-            bgColor: AppColors.greenColor,
-            textColor: AppColors.whiteColor);
-      },);
-    selectedIndex == 0 ? getAllEvents() : getFilterEventsFromFireStore();
-    //getAllFavouriteEvents();
-    getAllFavouriteEventsFromFireStore();
+
+    //     .timeout(Duration(
+    //   milliseconds: 500,
+    //
+    // ),
+    //   onTimeout: () {
+    //     ToastUtils.ShowToast(
+    //         msg: 'Event Updated Successfully',
+    //         bgColor: AppColors.greenColor,
+    //         textColor: AppColors.whiteColor);
+    // selectedIndex == 0 ? getAllEvents() : getFilterEventsFromFireStore();
+    // //getAllFavouriteEvents();
+    // getAllFavouriteEventsFromFireStore();
+    //   },);
+
     notifyListeners();
   }
 
-  void getAllFavouriteEvents() async {
+  void getAllFavouriteEvents(String uId) async {
     QuerySnapshot<Event> querySnapshot = await FirebaseUtils
-        .getEventCollection().get();
+        .getEventCollection(uId).get();
     eventsList = querySnapshot.docs.map((doc) {
       return doc.data();
     }).toList();
@@ -101,19 +114,19 @@ class EventListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void getAllFavouriteEventsFromFireStore() async {
-    var querySnapShot = await FirebaseUtils.getEventCollection().
+  void getAllFavouriteEventsFromFireStore(String uId) async {
+    var querySnapShot = await FirebaseUtils.getEventCollection(uId).
     orderBy('dateTime').where('isFavourite', isEqualTo: true).get();
     favouriteEventsList = querySnapShot.docs.map((doc) {
       return doc.data();
     }
     ).toList();
-    selectedIndex == 0 ? getAllEvents() : getFilterEventsFromFireStore();
+    selectedIndex == 0 ? getAllEvents(uId) : getFilterEventsFromFireStore(uId);
     notifyListeners();
   }
 
-  void deleteEvent(Event event) {
-    var querySnapShot = FirebaseUtils.getEventCollection()
+  void deleteEvent(Event event, String uId) {
+    var querySnapShot = FirebaseUtils.getEventCollection(uId)
         .doc(event.id)
         .delete()
         .timeout(
@@ -126,12 +139,12 @@ class EventListProvider extends ChangeNotifier {
             );
           },
         );
-    selectedIndex == 0 ? getAllEvents() : getFilterEventsFromFireStore();
+    selectedIndex == 0 ? getAllEvents(uId) : getFilterEventsFromFireStore(uId);
     notifyListeners();
   }
 
-  void editEvent(Event event) async {
-    await FirebaseUtils.getEventCollection().doc(event.id).update(
+  void editEvent(Event event, String uId) async {
+    await FirebaseUtils.getEventCollection(uId).doc(event.id).update(
         event.toFireStore());
     ToastUtils.ShowToast(
       msg: 'Event Edited Successfully',
@@ -141,8 +154,8 @@ class EventListProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void changeSelectedIndex(int newIndex) {
+  void changeSelectedIndex(int newIndex, String uId) {
     selectedIndex = newIndex;
-    selectedIndex == 0 ? getAllEvents() : getFilterEventsFromFireStore();
+    selectedIndex == 0 ? getAllEvents(uId) : getFilterEventsFromFireStore(uId);
   }
 }

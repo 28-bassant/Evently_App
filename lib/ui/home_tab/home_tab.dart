@@ -9,6 +9,8 @@ import 'package:evently_app/utils/app_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../providers/user_provider.dart';
+
 class HomeTab extends StatefulWidget {
   HomeTab({super.key});
 
@@ -18,6 +20,7 @@ class HomeTab extends StatefulWidget {
 
 class _HomeTabState extends State<HomeTab> {
   late EventListProvider eventListProvider;
+  late UserProvider userProvider;
   late Event event;
   @override
   void initState() {
@@ -26,16 +29,18 @@ class _HomeTabState extends State<HomeTab> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       //eventListProvider.getAllFavouriteEvents();
 
-      eventListProvider.getAllEvents();
+      eventListProvider.getAllEvents(userProvider.currentUser!.id);
 
     });
   }
   @override
   Widget build(BuildContext context) {
     eventListProvider = Provider.of<EventListProvider>(context);
+    userProvider = Provider.of<UserProvider>(context);
+
     eventListProvider.getEventNameList(context);
     if (eventListProvider.eventsList.isEmpty) {
-      eventListProvider.getAllEvents();
+      eventListProvider.getAllEvents(userProvider.currentUser!.id);
     }
 
 
@@ -66,7 +71,7 @@ class _HomeTabState extends State<HomeTab> {
               children: [
                 Text(AppLocalizations.of(context)!.welcome_back,
                   style: AppStyles.regular14White,),
-                Text('Route Academy',
+                Text(userProvider.currentUser!.name,
                   style: AppStyles.bold24White,),
 
               ],
@@ -120,7 +125,8 @@ class _HomeTabState extends State<HomeTab> {
                   length: eventListProvider.eventNameList.length,
                   child: TabBar(
                       onTap: (index) {
-                        eventListProvider.changeSelectedIndex(index);
+                        eventListProvider.changeSelectedIndex(
+                            index, userProvider.currentUser!.id);
                       },
                       isScrollable: true,
 
