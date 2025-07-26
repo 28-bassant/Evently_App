@@ -1,6 +1,7 @@
 import 'package:evently_app/firebase_utils.dart';
 import 'package:evently_app/l10n/app_localizations.dart';
 import 'package:evently_app/models/event.dart';
+import 'package:evently_app/providers/user_provider.dart';
 import 'package:evently_app/ui/add_event/widgets/event_date_or_time.dart';
 import 'package:evently_app/ui/home_tab/widget/event_tab_item.dart';
 import 'package:evently_app/ui/widgets/custom_elevated_button.dart';
@@ -301,18 +302,30 @@ class _AddEventState extends State<AddEvent> {
           dateTime: selectedDate!,
           eventName: SelectedEventName,
           time: formatTime!);
+      var userProvider = Provider.of<UserProvider>(context, listen: false);
+
+      FirebaseUtils
+          .addEventToFireStore(event, userProvider.currentUser!.id)
+          .then((value) {
+        ToastUtils.ShowToast(
+            msg: AppLocalizations.of(context)!.event_added_successfully,
+            bgColor: AppColors.primaryLight,
+            textColor: AppColors.whiteColor);
+        eventListProvider.getAllEvents(userProvider.currentUser!.id);
+        Navigator.pop(context);
+      },);
 
 
-      FirebaseUtils.addEventToFireStore(event).timeout(
-        Duration(milliseconds: 500),
-        onTimeout: () {
-          ToastUtils.ShowToast(
-              msg: AppLocalizations.of(context)!.event_added_successfully,
-              bgColor: AppColors.primaryLight,
-              textColor: AppColors.whiteColor);
-          eventListProvider.getAllEvents();
-          Navigator.pop(context);
-        },);
+      // .timeout(
+      //   Duration(milliseconds: 500),
+      //   onTimeout: () {
+      //     ToastUtils.ShowToast(
+      //         msg: AppLocalizations.of(context)!.event_added_successfully,
+      //         bgColor: AppColors.primaryLight,
+      //         textColor: AppColors.whiteColor);
+      //     eventListProvider.getAllEvents(userProvider.currentUser!.id);
+      //     Navigator.pop(context);
+      //   },);
     }
 
   }

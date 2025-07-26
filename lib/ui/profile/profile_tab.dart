@@ -1,15 +1,18 @@
 import 'package:evently_app/l10n/app_localizations.dart';
+import 'package:evently_app/providers/event_list_provider.dart';
 import 'package:evently_app/ui/profile/language/language_bootom_sheet.dart';
 import 'package:evently_app/ui/profile/theme/theme_bottom_sheet.dart';
 import 'package:evently_app/ui/widgets/custom_elevated_button.dart';
 import 'package:evently_app/utils/app_assets.dart';
 import 'package:evently_app/utils/app_colors.dart';
+import 'package:evently_app/utils/app_routes.dart';
 import 'package:evently_app/utils/app_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/app_language_provider.dart';
 import '../../providers/app_theme_provider.dart';
+import '../../providers/user_provider.dart';
 
 class ProfileTab  extends StatefulWidget {
   const ProfileTab({super.key});
@@ -25,6 +28,9 @@ class _ProfileTabState extends State<ProfileTab> {
   Widget build(BuildContext context) {
     var langageProvider = Provider.of<AppLanguageProvider>(context);
     var themeProvider = Provider.of<AppThemeProvider>(context);
+    var userProvider = Provider.of<UserProvider>(context);
+    var eventListProvider = Provider.of<EventListProvider>(context);
+
 
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
@@ -42,9 +48,11 @@ class _ProfileTabState extends State<ProfileTab> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Route Academy',style: AppStyles.bold24White,),
+                Text(userProvider.currentUser!.name,
+                  style: AppStyles.bold24White,),
                 SizedBox(height: height * .01,),
-                Text('routeacademy@gmail.com',style: AppStyles.medium16White,)
+                Text(userProvider.currentUser!.email,
+                  style: AppStyles.medium16White,)
               ],
             )
             
@@ -158,7 +166,10 @@ class _ProfileTabState extends State<ProfileTab> {
                 ),
               ),
               onPressed: () {
-                /// to do : log out
+                //todo : log out
+                eventListProvider.favouriteEventsList = [];
+                Navigator.pushNamedAndRemoveUntil
+                  (context, AppRoutes.loginRouteName, (route) => false,);
               },
             )
           ],

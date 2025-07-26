@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import '../models/event.dart';
 import '../providers/app_theme_provider.dart';
 import '../providers/event_list_provider.dart';
+import '../providers/user_provider.dart';
 import '../ui/add_event/widgets/event_date_or_time.dart';
 import '../ui/home_tab/widget/event_tab_item.dart';
 import '../ui/widgets/custom_elevated_button.dart';
@@ -308,8 +309,11 @@ class _EditEventState extends State<EditEvent> {
       dateTime: selectedDate ?? event.dateTime,
       time: formatTime ?? event.time,
     );
-    Provider.of<EventListProvider>(context, listen: false).editEvent(newEvent);
-    Provider.of<EventListProvider>(context, listen: false).getAllEvents();
+    var userProvider = Provider.of<UserProvider>(context, listen: false);
+    Provider.of<EventListProvider>(context, listen: false).editEvent(
+        newEvent, userProvider.currentUser!.id);
+    Provider.of<EventListProvider>(context, listen: false).getAllEvents(
+        userProvider.currentUser!.id);
     Navigator.pop(context);
   }
 

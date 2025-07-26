@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:evently_app/providers/user_provider.dart';
 import 'package:evently_app/utils/app_assets.dart';
 import 'package:evently_app/utils/app_colors.dart';
 import 'package:evently_app/utils/app_routes.dart';
@@ -20,6 +21,7 @@ class EventItem extends StatelessWidget {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     var eventListProvider = Provider.of<EventListProvider>(context);
+    var userProvider = Provider.of<UserProvider>(context);
     return
       InkWell(
         onTap: () {
@@ -92,7 +94,8 @@ class EventItem extends StatelessWidget {
                     ),
                     InkWell(
                       onTap: () {
-                        eventListProvider.UpdateEvents(event);
+                        eventListProvider.UpdateEvents(
+                            event, userProvider.currentUser!.id);
                       },
                       child: event.isFavourite == true ?
                       ImageIcon(
